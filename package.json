@@ -1,9 +1,9 @@
 {
-  "name": "react-sf-modal",
+  "name": "react-router-modal",
   "version": "1.0.0",
-  "description": "simple fucking react modal",
+  "description": "simple react router modal",
   "main": "lib/index.js",
-  "repository": "http://github.com/davidmfoley/react-sf-modal",
+  "repository": "http://github.com/davidmfoley/react-router-modal",
   "author": "davidmfoley@gmail.com",
   "license": "MIT",
   "scripts": {
