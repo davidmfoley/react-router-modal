@@ -6,11 +6,13 @@ import Modal from './modal';
 type Props = {
   match: { url: string },
   history: { push: Function },
+  parentPath?: string,
   path: string,
   component: any,
   exact?: boolean,
   props?: any,
-  className?: string
+  className?: string,
+  parentPath?: string | (match: { url: string }) => string,
 }
 
 function getStackOrder(match) {
@@ -18,12 +20,14 @@ function getStackOrder(match) {
   return match.url.length - 10000;
 }
 
-function ModalRoute({ path, className, component, exact, props, match, history }: Props): React$Element<*> {
+function ModalRoute({ path, parentPath, className, component, exact, props, match, history }: Props): React$Element<*> {
   const Component = component;
 
-  const parentPath = match.url;
   const navToParent = () => {
-    history.push(parentPath);
+    if (typeof(parentPath) === 'function') {
+      return history.push(parentPath(match));
+    }
+    history.push(parentPath || match.url);
   };
 
   return (

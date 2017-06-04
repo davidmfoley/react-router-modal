@@ -89,6 +89,56 @@ describe('ModalRoute', () => {
     });
   });
 
+  describe('parentPath', () => {
+    describe('as string', () => {
+      beforeEach(() => {
+        wrapper = mount(
+          <MemoryRouter initialEntries = {['/foo/bar']}>
+            <div>
+              <ModalRoute component={BarModal} path='*/bar' className='test-string' parentPath='/foo'/>
+              <ModalContainer backdropClassName='test-backdrop'/>
+            </div>
+          </MemoryRouter>
+        );
+      });
+
+      it('navigates to parent path on backdrop click', () => {
+        expect(wrapper.find('.test-string').length).to.eq(1);
+
+        const backdrop = wrapper.find('.test-backdrop');
+        backdrop.simulate('click');
+
+        expect(wrapper.find('.test-string').length).to.eq(0);
+      });
+    });
+
+    describe('as function', () => {
+      function testParentPathHandler(match) {
+        return '/foo';
+      }
+
+      beforeEach(() => {
+        wrapper = mount(
+          <MemoryRouter initialEntries = {['/foo/bar']}>
+            <div>
+              <ModalRoute component={BarModal} path='*/bar' className='test-string' parentPath={testParentPathHandler}/>
+              <ModalContainer backdropClassName='test-backdrop'/>
+            </div>
+          </MemoryRouter>
+        );
+      });
+
+      it('navigates to parent path on backdrop click', () => {
+        expect(wrapper.find('.test-string').length).to.eq(1);
+
+        const backdrop = wrapper.find('.test-backdrop');
+        backdrop.simulate('click');
+
+        expect(wrapper.find('.test-string').length).to.eq(0);
+      });
+    });
+  });
+
   describe('when route is reversed', () => {
     beforeEach(() => {
       wrapper = mount(
