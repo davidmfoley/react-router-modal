@@ -15,7 +15,8 @@
     "build": "npm run -s build:clean && npm run -s build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "babel -d lib --ignore '**/*.test.js' src",
-    "build:flow": "flow-copy-source -v -i 'test/**/*' src lib"
+    "build:flow": "flow-copy-source -v -i 'test/**/*' src lib",
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "react": "^15",
