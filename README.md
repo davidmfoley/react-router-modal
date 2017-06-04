@@ -23,51 +23,68 @@ Install using yarn or npm.
 ModalContainer contains all modals that are shown. Typically you will want to mount this just before your closing `</body>` tag.
 Nothing will be rendered into the dom if no modals are current shown.
 
+```
+  <ModalContainer
+    bodyModalOpenClassName='modal-open'
+    containerClassName='modal-container'
+    backdropClassName='modal-backdrop'
+    modalClassName='modal'
+  />
+```
+
 ##### props
 
-* `bodyModalOpenClassName`
+###### `bodyModalOpenClassName`
 
 Class name to set on the `<body>` when a modal is mounted. Typically used to prevent default scroll behavior, etc.
 Defaults to `react-router-modal__modal-open`
 
-* `containerClassName`
+###### `containerClassName`
 Class name for the modal container element. Note that this element is only rendered when at least one modal is shown.
 
 Defaults to `react-router-modal__modal-container`
 
-* `backdropClassName`
+###### `backdropClassName`
 Class name for the modal backdrop element(s) that are show behind each modal.
 Defaults to `react-router-modal__modal-backdrop`
 
-* `modalClassName`
+###### `modalClassName`
 Class name for the modal element(s) that wrap the modal content. Can be overridden by the `className` property on `<ModalRoute />` or `<Modal />`
 
 Defaults to `react-router-modal__modal`
 
 #### ModalRoute
 
-ModalRoute attaches a component to a route.
+ModalRoute attaches a component to a route in react-router (version 4). When the route is matched, the component is rendered in a modal element.
 
+```
+  <ModalContainer
+    className='image-detail-modal'
+    component={MyImageDetailComponent}
+    props={ { foo: 'bar'} }
+    path='*/images/:imageId'
+  />
+```
 ##### props
 
-* path
+###### path
 
 The path to match. See react-router docs.
 
-* component
+###### component
 
 The component to render inside the modal when the path is matched.
 
-* exact
+###### exact
 
 Only match on exact route match. See react-router docs.
 
-* props
+###### props
 
 Properties to be passed to the component when the route is matched.
 The react-router props `location', 'history', and 'match` will also be included.
 
-* className
+###### className
 
 If set, overrides the `modalClassName` property on the `ModalContainer`
 
@@ -78,25 +95,73 @@ If multiple routes match, the modals will be stacked based on the length of the 
 
 If you want to show a modal without a route, you can use this. Modals shown this way default to stacking on top of modals shown with ModalRoute.
 
+
+```
+<div>
+  <Modal
+    className='top-component-modal'
+    component={MyTopComponent}
+    props={ { foo: 'bar'} }
+    stackOrder={2}
+  />
+  <Modal
+    component={MyBottomComponent}
+    props={ { bar: 'baz'} }
+    stackOrder={1}
+  />
+</div>
+```
 ##### props
 
-* component
+###### component
 
 The component to render inside the modal when the path is matched.
 
-* props
+###### props
 
 Properties to be passed to the component rendered inside the modal.
 
-* stackOrder
+###### stackOrder
 
 Controls the order the modals are stacked. Higher number means "on top".
 
-* className
+###### className
 
 If set, overrides the `modalClassName` property on the `ModalContainer`
-
 
 ### CSS
 
 Default css is included in `css/react-router-modal.css`. You can use this as a basis for your own modal styles.
+
+#### Example functional component
+```
+import { ModalContainer, ModalRoute, Modal } from 'react-router-modal';
+import { BrowserRouter, Link } from 'react-router-dom';
+
+function FooModal() {
+  return <div>FOO</div>;
+}
+
+function BarModal() {
+  return <div>BAR</div>;
+}
+
+function Example() {
+  return (
+    <BrowserRouter>
+      <div>
+        <Link to='/foo/bar'>Bar on top of Foo</Link>
+        <Link to='/bar/foo'>Foo on top of Bar</Link>
+
+        <Link to='/foo'>just foo</Link>
+        <Link to='/bar'>just bar</Link>
+
+        <ModalRoute component={FooModal} path='*/foo' className='test-modal test-modal-foo'/>
+        <ModalRoute component={BarModal} path='*/bar' className='test-modal test-modal-bar'/>
+
+        <ModalContainer />
+      </div>
+    </BrowserRouter>
+  );
+}
+```
