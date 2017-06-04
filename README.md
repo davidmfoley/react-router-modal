@@ -2,7 +2,7 @@
 
 A simple way to handle showing modals with react-router version 4.
 
-Examples: https://github.com/davidmfoley/react-router-modal-examples
+Examples: https://davidmfoley.github.io/react-router-modal-examples
 
 ### Installation
 
@@ -24,7 +24,7 @@ For ex: `yarn add react-router-dom react react-dom`.
 #### ModalContainer
 
 ModalContainer contains all modals that are shown. Typically you will want to mount this just before your closing `</body>` tag.
-Nothing will be rendered into the dom if no modals are current shown.
+Nothing will be rendered into the dom if no modals are currently shown.
 
 ```
   <ModalContainer
