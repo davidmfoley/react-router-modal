@@ -100,7 +100,6 @@ export default class ModalContainer extends React.Component {
       bodyModalOpenClassName,
       modalClassName,
     } = this.props;
-    console.log(this.props, 'PROPS')
 
     const modals = this.getSortedModals();
 
