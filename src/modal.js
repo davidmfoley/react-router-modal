@@ -7,6 +7,7 @@ type Props = {
   props?: Object,
   stackOrder?: number,
   className?: string,
+  onBackdropClick?: Function
 }
 
 type State = {
@@ -18,12 +19,13 @@ export default class Modal extends React.Component {
   state: State
 
   componentDidMount() {
-    const { className, component, stackOrder, props } = this.props;
+    const { className, component, stackOrder, props, onBackdropClick } = this.props;
     this.setState({
       id: mountModal({
         component,
         props: props || {},
         stackOrder,
+        onBackdropClick,
         className
       })
     });

@@ -12,7 +12,6 @@ function TestModalContent() {
   return <div></div>;
 }
 
-
 describe('handling startup event order', () => {
   let wrapper: ReactWrapper;
 

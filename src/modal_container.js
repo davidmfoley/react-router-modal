@@ -115,6 +115,7 @@ export default class ModalContainer extends React.Component {
           backdropClassName={backdropClassName}
           containerClassName={containerClassName}
           modalClassName={m.info.className || modalClassName}
+          onBackdropClick={m.info.onBackdropClick}
           component={m.info.component}
           props={m.info.props || {}}
         />)}
@@ -123,11 +124,11 @@ export default class ModalContainer extends React.Component {
   }
 }
 
-function ModalWithBackdrop({component, props, backdropClassName, modalClassName}) {
+function ModalWithBackdrop({component, props, onBackdropClick, backdropClassName, modalClassName}) {
   const Component = component;
   return (
     <div>
-      <div className={backdropClassName || ''} />
+      <div className={backdropClassName || ''} onClick={onBackdropClick} />
       <div className={modalClassName || ''}>
         <Component {...props} />
       </div>
