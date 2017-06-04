@@ -13,17 +13,15 @@ type ModalsHandler = (modals: MountedModal[]) => void;
 
 let modals: MountedModal[] = [];
 
-function warnNoContainer(modals) {
-  console.error(`No <ModalContainer /> found when mounting <Modal />`);
-}
-
-let notifyChanged: ModalsHandler = warnNoContainer
+let notifyChanged: ModalsHandler = () => {}
 
 function clearHandler() {
   notifyChanged = () => {};
 }
+
 function setHandler(handler: ModalsHandler) {
   notifyChanged = handler;
+  notifyChanged(modals);
 }
 
 function nextId() : ModalIdentifier {
