@@ -58,7 +58,7 @@ Defaults to `react-router-modal__modal`
 ModalRoute attaches a component to a route in react-router (version 4). When the route is matched, the component is rendered in a modal element.
 
 ```
-  <ModalContainer
+  <ModalRoute
     className='image-detail-modal'
     component={MyImageDetailComponent}
     props={ { foo: 'bar'} }
