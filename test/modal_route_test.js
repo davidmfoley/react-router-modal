@@ -2,6 +2,7 @@
 import React from 'react';
 import { describe, it, afterEach, beforeEach } from 'mocha';
 import { mount, ReactWrapper } from 'enzyme';
+import Modal from '../src/modal';
 import ModalRoute from '../src/modal_route';
 import ModalContainer from '../src/modal_container';
 import { withRouter, MemoryRouter } from 'react-router-dom';
@@ -14,6 +15,10 @@ function FooModal() {
 }
 
 function BarModal() {
+  return <div>BAR</div>;
+}
+
+function BazModal() {
   return <div>BAR</div>;
 }
 
@@ -102,6 +107,28 @@ describe('ModalRoute', () => {
       const modalWrappers = wrapper.find('.test-modal');
       expect(modalWrappers.get(0).className).to.eq('test-modal test-modal-bar');
       expect(modalWrappers.get(1).className).to.eq('test-modal test-modal-foo');
+    });
+  });
+
+  describe('with Modal and ModalRoute', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <MemoryRouter initialEntries = {['/bar/foo']}>
+          <div>
+            <Modal component={BazModal} className='test-modal test-modal-baz-1'/>
+            <Modal component={BazModal} className='test-modal test-modal-baz-2'/>
+            <RouterWrapper />
+          </div>
+        </MemoryRouter>
+      );
+    });
+
+    it('renders route modals first, then others', () => {
+      const modalWrappers = wrapper.find('.test-modal');
+      expect(modalWrappers.get(0).className).to.eq('test-modal test-modal-bar');
+      expect(modalWrappers.get(1).className).to.eq('test-modal test-modal-foo');
+      expect(modalWrappers.get(2).className).to.eq('test-modal test-modal-baz-1');
+      expect(modalWrappers.get(3).className).to.eq('test-modal test-modal-baz-2');
     });
   });
 });
