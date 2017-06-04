@@ -1,15 +1,15 @@
-// added to the body element when shown
+/* added to the body element when shown; prevent scrolling */
 .react-router-modal__modal-open {
-  overflow: hidden; // prevent scrolling
+  overflow: hidden;
 }
 
-// container that contains all modals and backdrops
+/* container that contains all modals and backdrops */
 .react-router-modal__container {
   position: fixed;
   z-index: 1000
 }
 
-// backdrop shown behind each modal
+/* backdrop shown behind each modal */
 .react-router-modal__backdrop {
   position: fixed;
   top: 0;
@@ -20,7 +20,7 @@
   background-color: rgba(0,0,0,0.5)
 }
 
-// wrapper element for the modal component
+/* wrapper element for the modal component */
 .react-router-modal__modal {
   position: fixed;
   top: 50%;
