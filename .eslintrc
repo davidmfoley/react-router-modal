@@ -1,15 +1,25 @@
 {
-    "parser": "babel-eslint",
-    "plugins": [
-        "flowtype"
-    ],
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true
-        }
-    },
-    "rules": {
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+  ],
+  "parser": "babel-eslint",
+  "plugins": [
+    "react",
+    "flowtype"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
     }
+  },
+
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "react/no-children-prop": "off"
+  }
 }
