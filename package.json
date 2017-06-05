@@ -12,10 +12,10 @@
     "test:mocha": "mocha --compilers js:babel-register --require test/setup.js test/*test.js",
     "test:lint": "eslint src/",
     "watch:test": "watch 'npm test' ./src ./test",
-    "build": "npm run -s build:clean && npm run -s build:lib",
+    "build": "npm run -s build:clean && npm run -s build:lib && npm run -s build:flow",
     "build:clean": "rimraf lib",
     "build:lib": "babel -d lib --ignore '**/*.test.js' src",
-    "build:flow": "flow-copy-source -v -i 'test/**/*' src lib",
+    "build:flow": "flow-copy-source -v  src lib",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
@@ -39,6 +39,7 @@
     "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
     "eslint-plugin-flowtype": "^2.34.0",
+    "flow-copy-source": "^1.1.0",
     "jsdom": "^11.0.0",
     "mocha": "^3.4.2",
     "react": "^15.5.4",
