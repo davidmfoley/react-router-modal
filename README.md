@@ -94,6 +94,38 @@ If set, overrides the `modalClassName` property on the `ModalContainer`
 When the route matches, the component will be shown inside a modal.
 If multiple routes match, the modals will be stacked based on the length of the path that is matched.
 
+#### ModalLink
+
+ModalLink provides a simple way to create a ModalRoute and a Link at the same time.
+
+##### props
+
+###### path
+
+The path to match.
+
+###### component
+
+The component to render inside the modal when the path is matched.
+Note that children are rendered in the Link, not in the modal as with other components.
+
+###### exact
+
+Only match on exact route match. See react-router docs.
+
+###### props
+
+Properties to be passed to the component when the route is matched.
+The react-router props `location', 'history', and 'match` will also be included.
+
+###### linkClassName
+
+className for the Link.
+
+###### modalClassName
+
+className for the Modal.
+
 #### Modal
 
 If you want to show a modal without a route, you can use this. Modals shown this way default to stacking on top of modals shown with ModalRoute.
@@ -127,10 +159,11 @@ Properties to be passed to the component rendered inside the modal.
 ###### stackOrder
 
 Controls the order the modals are stacked. Higher number means "on top".
+If not set, modals will default to stacking in the order they are mounted.
 
 ###### className
 
-If set, overrides the `modalClassName` property on the `ModalContainer`
+className used on the modal. Defaults to the `modalClassName` property on the `ModalContainer`
 
 ### CSS
 

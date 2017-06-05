@@ -13,9 +13,6 @@ function FooModal() {
   return <div>FOO</div>;
 }
 
-function BarModal() {
-  return <div>BAR</div>;
-}
 
 describe('ModalLink', () => {
   let wrapper: ReactWrapper;

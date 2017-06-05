@@ -4,8 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import ModalRoute from './modal_route';
 
 type Props = {
-  match: { url: string },
-  history: { push: Function },
+  match: {url: string},
   path: string,
   children?: any,
   component?: any,
@@ -23,6 +22,8 @@ function ModalLink(props: Props): any {
     children,
     component,
     linkClassName,
+    match,
+    parentPath,
     modalClassName
   } = props;
 
@@ -32,8 +33,10 @@ function ModalLink(props: Props): any {
       <ModalRoute
         exact={exact}
         path={path}
+        props={props.props}
         component={component}
         className={modalClassName}
+        parentPath={parentPath || match.url}
       />
     </Link>
   );
