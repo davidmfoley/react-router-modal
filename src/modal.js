@@ -3,7 +3,8 @@ import React from 'react';
 import { mountModal, unmountModal } from './modal_container';
 
 type Props = {
-  component: any,
+  component?: any,
+  children?: any,
   props?: Object,
   stackOrder?: number,
   className?: string,
@@ -19,10 +20,11 @@ export default class Modal extends React.Component {
   state: State
 
   componentDidMount() {
-    const { className, component, stackOrder, props, onBackdropClick } = this.props;
+    const { className, children, component, stackOrder, props, onBackdropClick } = this.props;
     this.setState({
       id: mountModal({
         component,
+        children,
         props: props || {},
         stackOrder,
         onBackdropClick,

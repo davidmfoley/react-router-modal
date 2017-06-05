@@ -48,10 +48,11 @@ type Props = {
   backdropClassName?: string,
   modalClassName?: string,
   bodyModalOpenClassName?: string,
+  children?: any,
 }
 
 type State = {
-  modals: ModalDisplayInfo[]
+  modals: MountedModal[]
 }
 
 export default class ModalContainer extends React.Component {
@@ -75,17 +76,17 @@ export default class ModalContainer extends React.Component {
     clearHandler();
   }
 
-  onModals(modals: ModalDisplayInfo[]) {
+  onModals(modals: MountedModal[]) {
     this.setState({modals});
   }
 
-  getSortedModals(): ModalDisplayInfo {
+  getSortedModals(): MountedModal[] {
     const sorted = [...this.state.modals];
     sorted.sort(this.compareModals);
     return sorted;
   }
 
-  compareModals(a: ModalDisplayInfo, b: ModalDisplayInfo): number {
+  compareModals(a: MountedModal, b: MountedModal): number {
     const stackOrderDiff = (a.info.stackOrder || 0) - (b.info.stackOrder || 0);
     if (stackOrderDiff !== 0) return stackOrderDiff;
     return a.id - b.id;
@@ -112,6 +113,7 @@ export default class ModalContainer extends React.Component {
       <div className={containerClassName}>
         {modals.map(m => <ModalWithBackdrop
           key={m.id}
+          children={m.info.children}
           backdropClassName={backdropClassName}
           containerClassName={containerClassName}
           modalClassName={m.info.className || modalClassName}
@@ -124,15 +126,23 @@ export default class ModalContainer extends React.Component {
   }
 }
 
-function ModalWithBackdrop({component, props, onBackdropClick, backdropClassName, modalClassName}) {
+function ModalWithBackdrop({
+  children,
+  component,
+  props,
+  onBackdropClick,
+  backdropClassName,
+  modalClassName
+}: ModalDisplayInfo) {
   const Component = component;
+
   return (
     <div>
       <div className={backdropClassName || ''} onClick={onBackdropClick} />
       <div className={modalClassName || ''}>
-        <Component {...props} />
+        {!Component && children}
+        {Component && <Component {...props} />}
       </div>
     </div>
   );
-
 }

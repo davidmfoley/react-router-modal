@@ -8,20 +8,21 @@ type Props = {
   history: { push: Function },
   parentPath?: string,
   path: string,
-  component: any,
+  children?: any,
+  component?: any,
   exact?: boolean,
   props?: any,
   className?: string,
   parentPath?: string | (match: { url: string }) => string,
 }
 
+
 function getStackOrder(match) {
   // order routed modals behind any directly instantiated modals
   return match.url.length - 10000;
 }
 
-function ModalRoute({ path, parentPath, className, component, exact, props, match, history }: Props): React$Element<*> {
-  const Component = component;
+function ModalRoute({ path, parentPath, className, children, component, exact, props, match, history }: Props): React.Element<*> {
 
   const navToParent = () => {
     if (typeof(parentPath) === 'function') {
@@ -34,6 +35,7 @@ function ModalRoute({ path, parentPath, className, component, exact, props, matc
     <Route path={path} exact={exact} render={({match, location, history}) => (
       <Modal
         component={component}
+        children={children}
         props={{...props, match, location, history}}
         className={className}
         stackOrder={getStackOrder(match)}
