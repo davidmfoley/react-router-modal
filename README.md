@@ -9,12 +9,14 @@ Examples: https://davidmfoley.github.io/react-router-modal-examples
 Install using yarn or npm.
 
 `npm install react-router-modal --save`
+
 `yarn add react-router-modal`
 
 You will also need to install some other modules as peers.
 TBH, if you are looking at this package you probably already have these, but you might want to check for version compaibility.
 
 `react-router-dom` *version 4*
+
 `react` & `react-dom`, version 15
 
 For ex: `yarn add react-router-dom react react-dom`.
