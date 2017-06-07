@@ -38,6 +38,17 @@ export function mountModal(info: ModalDisplayInfo): ModalIdentifier {
   return id;
 }
 
+export function updateModal(id: ModalIdentifier, info: ModalDisplayInfo): void {
+  modals = modals.map(m => (
+    m.id === id ? {
+      id,
+      info
+    } : m
+  ));
+
+  notifyChanged(modals);
+}
+
 export function unmountModal(id: ModalIdentifier) {
   modals = modals.filter(m => m.id !== id);
   notifyChanged(modals);

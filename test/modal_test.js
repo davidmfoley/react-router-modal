@@ -8,21 +8,22 @@ import chai from 'chai';
 
 let expect = chai.expect;
 
-function TestModalContent() {
-  return <div></div>;
+function TestModalContent(props: any) {
+  return <div>{props.message || 'none'}</div>;
 }
 
 describe('rendering modals', () => {
-  function Wrapper({showModal}) {
+  function Wrapper({showModal, modalProps}: any) {
     return (
       <div>
-        { showModal && <Modal className='test-modal' component={TestModalContent} props={{}}>
+        { showModal && <Modal className='test-modal' component={TestModalContent} props={modalProps || {}}>
           What
         </Modal> }
         <ModalContainer backdropClassName='test-backdrop-class-name' />
       </div>
     );
   }
+
   let wrapper: ReactWrapper;
 
   beforeEach(() => { wrapper = mount(<Wrapper />); });
@@ -49,6 +50,18 @@ describe('rendering modals', () => {
       const backdrop = wrapper.find('.test-modal');
 
       expect(backdrop.length).to.eq(1);
+    });
+
+    describe('that has props change', () => {
+      beforeEach(() => {
+        wrapper.setProps({showModal: true, modalProps: {message: 'hello'}});
+      });
+
+      it('passes down changed props', () => {
+        const backdrop = wrapper.find('.test-modal div');
+        expect(backdrop.get(0).textContent).to.eq('hello');
+      });
+
     });
 
     describe('that is subsequently hidden', () => {

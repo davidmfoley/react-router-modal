@@ -160,6 +160,25 @@ describe('ModalRoute', () => {
     });
   });
 
+  describe('with param in route path', () => {
+    beforeEach(() => {
+      const MessageModal = ({match}: any) => (<p>{match.params.message}</p>);
+      wrapper = mount(
+        <MemoryRouter initialEntries = {['/message/hello']}>
+          <div>
+            <ModalContainer backdropClassName='test-backdrop'/>
+            <ModalRoute component={MessageModal} path='*/message/:message' className='test-modal'/>
+          </div>
+        </MemoryRouter>
+      );
+    });
+
+    it('passes along the route params', () => {
+      expect(wrapper.find('.test-modal').length).to.eq(1);
+      expect(wrapper.find('.test-modal p').get(0).textContent).to.eq('hello');
+    });
+  });
+
   describe('with Modal and ModalRoute', () => {
     beforeEach(() => {
       wrapper = mount(

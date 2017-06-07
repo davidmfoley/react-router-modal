@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { mountModal, unmountModal } from './modal_container';
+import { mountModal, updateModal, unmountModal } from './modal_container';
 
 type Props = {
   component?: any,
@@ -30,6 +30,19 @@ export default class Modal extends React.Component {
         onBackdropClick,
         className
       })
+    });
+  }
+
+  componentWillReceiveProps(next: Props) {
+    const { className, children, component, stackOrder, props, onBackdropClick } = next;
+
+    updateModal(this.state.id, {
+      component,
+      children,
+      props: props || {},
+      stackOrder,
+      onBackdropClick,
+      className
     });
   }
 
