@@ -3,7 +3,7 @@ import ModalContainer from './modal_container';
 import ModalLink from './modal_link';
 import ModalRoute from './modal_route';
 
-/*
+/**
 * @example <caption>TL;DR</caption>
 *import { ModalContainer, ModalRoute } from 'react-router-modal';
 *import { BrowserRouter, Link } from 'react-router-dom';

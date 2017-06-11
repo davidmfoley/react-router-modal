@@ -2,10 +2,49 @@
 
 ### Table of Contents
 
+-   [index](#index)
 -   [ModalContainer](#modalcontainer)
 -   [ModalLink](#modallink)
 -   [ModalRoute](#modalroute)
 -   [Modal](#modal)
+
+## index
+
+**Examples**
+
+_TL;DR_
+
+```javascript
+import { ModalContainer, ModalRoute } from 'react-router-modal';
+import { BrowserRouter, Link } from 'react-router-dom';
+
+function FooModal() {
+ return <div>FOO</div>;
+}
+
+function BarModal() {
+ return <div>BAR</div>;
+}
+
+function Example() {
+return (
+  <BrowserRouter>
+    <div>
+      <Link to='/foo/bar'>Bar on top of Foo</Link>
+      <Link to='/bar/foo'>Foo on top of Bar</Link>
+
+      <Link to='/foo'>just foo</Link>
+      <Link to='/bar'>just bar</Link>
+
+      <ModalRoute component={FooModal} path='*\/foo' className='test-modal test-modal-foo'/>
+      <ModalRoute component={BarModal} path='*\/bar' className='test-modal test-modal-bar'/>
+
+      <ModalContainer />
+    </div>
+  </BrowserRouter>
+);
+}
+```
 
 ## ModalContainer
 
