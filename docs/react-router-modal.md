@@ -25,6 +25,42 @@ When no modals are shown, nothing is rendered into the DOM.
     -   `props.containerClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to the container itself (optional, default `react-router-modal__container`)
     -   `props.bodyModalClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to the <body /> when any modals are shown (optional, default `react-router-modal__modal-open`)
 
+**Examples**
+
+_Using default class names_
+
+```javascript
+<ModalContainer />
+```
+
+_Overriding the default class names_
+
+```javascript
+<ModalContainer
+  bodyModalOpenClassName='modal-open'
+  containerClassName='modal-container'
+  backdropClassName='modal-backdrop'
+  modalClassName='modal'
+/>
+
+
+Note that modals are made "modal" via CSS styles, and end up rendered like the following in the DOM (with two modals, for example):
+<div className={containerClassName'>
+  <div>
+    <div className={backdropClassName} />
+    <div className={modalClassName}>
+      .. bottom-most modal contents ..
+    </div>
+  </div>
+  <div>
+    <div className={backdropClassName} />
+    <div className={modalClassName}>
+      .. top-most modal contents ..
+    </div>
+  </div>
+</div>
+```
+
 ## ModalLink
 
 Link and ModalRoute in one convenient component
@@ -42,6 +78,16 @@ Renders a link that, when clicked, will navigate to the route that shows the mod
     -   `props.component` **ReactComponent** Component to render in the modal.
     -   `props.props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Props to be passed to the react component specified by the component property.
 
+**Examples**
+
+_Example ModalLink_
+
+```javascript
+<ModalLink path='/hello' component={HelloComponent}>
+  Say Hello
+</ModalLink>
+```
+
 Returns **any** 
 
 ## ModalRoute
@@ -57,7 +103,8 @@ A react-router Route that shows a modal when the location pathname matches.
     -   `props.children` **Children** modal content can be specified as chld elements
     -   `props.component` **ReactElement** modal content can be specified as a component type
     -   `props.exact` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set, only show modal if route exactly matches path.
-    -   `props.props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Props to be passed to the react component specified by the component property.
+    -   `props.props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Props to be passed to the react component specified by the component property.When the route matches, the modal is shown.
+        If multiple routes match, the modals will be stacked based on the length of the path that is matched.
     -   `props.match`  
     -   `props.history`  
 
@@ -103,4 +150,22 @@ const ChildrenExample = () => (
     <Hello who='World' />
   </Modal>
 );
+```
+
+_Specifying stack order_
+
+```javascript
+<div>
+  <Modal
+    className='top-component-modal'
+    component={MyTopComponent}
+    props={ { foo: 'bar'} }
+    stackOrder={2}
+  />
+  <Modal
+    component={MyBottomComponent}
+    props={ { bar: 'baz'} }
+    stackOrder={1}
+  />
+</div>
 ```

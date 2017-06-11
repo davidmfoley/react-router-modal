@@ -94,7 +94,39 @@ type State = {
 * @param {String} [props.backdropClassName=react-router-modal__backdrop] class name to apply to modal backdrops
 * @param {String} [props.containerClassName=react-router-modal__container] class name to apply to the container itself
 * @param {String} [props.bodyModalClassName=react-router-modal__modal-open] class name to apply to the <body /> when any modals are shown
+*
+* @example <caption>Using default class names</caption>
+*
+* <ModalContainer />
+*
+* @example <caption>Overriding the default class names</caption>
+*
+* <ModalContainer
+*   bodyModalOpenClassName='modal-open'
+*   containerClassName='modal-container'
+*   backdropClassName='modal-backdrop'
+*   modalClassName='modal'
+* />
+*
+*
+* Note that modals are made "modal" via CSS styles, and end up rendered like the following in the DOM (with two modals, for example):
+* <div className={containerClassName'>
+*   <div>
+*     <div className={backdropClassName} />
+*     <div className={modalClassName}>
+*       .. bottom-most modal contents ..
+*     </div>
+*   </div>
+*   <div>
+*     <div className={backdropClassName} />
+*     <div className={modalClassName}>
+*       .. top-most modal contents ..
+*     </div>
+*   </div>
+* </div>
+*
 */
+
 export default class ModalContainer extends React.Component {
   props: Props
   state: State ={

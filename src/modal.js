@@ -47,6 +47,21 @@ type State = {
 *     <Hello who='World' />
 *   </Modal>
 * );
+*
+* @example <caption>Specifying stack order</caption>
+* <div>
+*   <Modal
+*     className='top-component-modal'
+*     component={MyTopComponent}
+*     props={ { foo: 'bar'} }
+*     stackOrder={2}
+*   />
+*   <Modal
+*     component={MyBottomComponent}
+*     props={ { bar: 'baz'} }
+*     stackOrder={1}
+*   />
+* </div>
 */
 
 export default class Modal extends React.Component {

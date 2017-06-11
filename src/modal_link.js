@@ -29,6 +29,13 @@ type Props = {
 * @param {Children} props.children Link contents. Note that Modal content must be specified by the component property.
 * @param {ReactComponent} props.component Component to render in the modal.
 * @param {Object} props.props Props to be passed to the react component specified by the component property.
+*
+*
+* @example <caption>Example ModalLink</caption>
+*
+* <ModalLink path='/hello' component={HelloComponent}>
+*   Say Hello
+* </ModalLink>
 */
 function ModalLink(props: Props): any {
   const {

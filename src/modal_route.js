@@ -34,6 +34,11 @@ function getStackOrder(match) {
 * @param {Children} props.children modal content can be specified as chld elements
 * @param {ReactElement} props.component modal content can be specified as a component type
 * @param {Object} props.props Props to be passed to the react component specified by the component property.
+*
+*
+* When the route matches, the modal is shown.
+* If multiple routes match, the modals will be stacked based on the length of the path that is matched.
+*
 */
 function ModalRoute({ path, parentPath, className, children, component, exact, props, match, history }: Props): React.Element<*> {
 
