@@ -4,7 +4,7 @@ A simple way to handle showing modals with react-router version 4.
 
 Examples: https://davidmfoley.github.io/react-router-modal-examples
 
-Component docs: https://github.com/davidmfoley/react-router-modal/docs/react-router-modal.md
+Component docs: https://github.com/davidmfoley/react-router-modal/blob/master/docs/react-router-modal.md
 
 ### Installation
 
