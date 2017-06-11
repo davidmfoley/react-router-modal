@@ -12,10 +12,11 @@
     "test:mocha": "mocha --compilers js:babel-register --require test/setup.js test/*test.js",
     "test:lint": "eslint src/",
     "watch:test": "watch 'npm test' ./src ./test",
-    "build": "npm run -s build:clean && npm run -s build:lib && npm run -s build:flow",
+    "build": "npm run -s build:clean && npm run -s build:lib && npm run -s build:flow && npm run -d build:docs",
     "build:clean": "rimraf lib",
     "build:lib": "babel -d lib --ignore '**/*.test.js' src",
     "build:flow": "flow-copy-source -v  src lib",
+    "build:docs": "documentation build src/ -f html -o docs",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
@@ -49,5 +50,8 @@
     "react-test-renderer": "^15.5.4",
     "rimraf": "^2.6.1",
     "watch": "^1.0.2"
+  },
+  "dependencies": {
+    "documentation": "4.0.0-rc1"
   }
 }
