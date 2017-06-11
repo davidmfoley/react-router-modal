@@ -37,6 +37,7 @@
     "babel-register": "^6.24.1",
     "chai": "^4.0.1",
     "chai-enzyme": "^0.7.1",
+    "documentation": "4.0.0-rc.1",
     "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
     "eslint-plugin-flowtype": "^2.34.0",
@@ -51,7 +52,5 @@
     "rimraf": "^2.6.1",
     "watch": "^1.0.2"
   },
-  "dependencies": {
-    "documentation": "4.0.0-rc1"
-  }
+  "dependencies": {}
 }
