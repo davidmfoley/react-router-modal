@@ -22,7 +22,7 @@ function BazModal() {
   return <div>BAR</div>;
 }
 
-function Wrapper({showModal, match}) {
+function Wrapper() {
   return (
     <div>
       <ModalContainer backdropClassName='test-backdrop'/>
