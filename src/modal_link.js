@@ -15,6 +15,21 @@ type Props = {
   parentPath?: string | (match: { url: string }) => string,
 }
 
+/**
+* Link and ModalRoute in one convenient component
+* Renders a link that, when clicked, will navigate to the route that shows the modal.
+*
+* @param {Object} props
+* @param {String} props.path path to match
+* @param {Boolean} props.exact If set, only show modal if route exactly matches path.
+* @param {String} props.parentPath path to navigate to when backdrop is clicked
+*
+* @param {String} props.linkClassName class name to apply to <Link />
+* @param {String} props.modalClassName class name to apply to modal container
+* @param {Children} props.children Link contents. Note that Modal content must be specified by the component property.
+* @param {ReactComponent} props.component Component to render in the modal.
+* @param {Object} props.props Props to be passed to the react component specified by the component property.
+*/
 function ModalLink(props: Props): any {
   const {
     exact,

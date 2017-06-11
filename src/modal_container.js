@@ -3,6 +3,7 @@ import React from 'react';
 import type { ModalDisplayInfo, ModalIdentifier } from './types';
 
 let nextIdValue: ModalIdentifier = 0;
+let hasContainer = false;
 
 type MountedModal = {
   id: ModalIdentifier,
@@ -19,7 +20,12 @@ function clearHandler() {
   notifyChanged = () => {};
 }
 
+function firstMount() {
+  return nextId === 0;
+}
+
 function setHandler(handler: ModalsHandler) {
+  hasContainer = true;
   notifyChanged = handler;
   notifyChanged(modals);
 }
@@ -28,7 +34,17 @@ function nextId() : ModalIdentifier {
   return nextIdValue++;
 }
 
+function warnIfNoContainer() {
+  if (!hasContainer) {
+    console.log(`react-router-modal warning: Modal was mounted but no <ModalContainer /> found`); //eslint-disable-line
+  }
+}
+
 export function mountModal(info: ModalDisplayInfo): ModalIdentifier {
+  if (firstMount() && !hasContainer) {
+    setTimeout(warnIfNoContainer, 1000);
+  }
+
   const id = nextId();
   modals.push({
     id,
@@ -66,6 +82,19 @@ type State = {
   modals: MountedModal[]
 }
 
+/**
+* Container for rendered modals.
+*
+* This should be included in your react app as one of the last elements before the closing body tag.
+* When modals are rendered, they live inside this container.
+* When no modals are shown, nothing is rendered into the DOM.
+*
+* @param {Props} props
+* @param {String} [props.modalClassName=react-router-modal__modal] class name to apply to modals
+* @param {String} [props.backdropClassName=react-router-modal__backdrop] class name to apply to modal backdrops
+* @param {String} [props.containerClassName=react-router-modal__container] class name to apply to the container itself
+* @param {String} [props.bodyModalClassName=react-router-modal__modal-open] class name to apply to the <body /> when any modals are shown
+*/
 export default class ModalContainer extends React.Component {
   props: Props
   state: State ={

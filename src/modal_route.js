@@ -22,6 +22,19 @@ function getStackOrder(match) {
   return match.url.length - 10000;
 }
 
+/**
+* A react-router Route that shows a modal when the location pathname matches.
+*
+* @param {Object} props
+* @param {String} props.path path to match
+* @param {Boolean} props.exact If set, only show modal if route exactly matches path.
+* @param {String} props.parentPath path to navigate to when backdrop is clicked
+*
+* @param {String} props.className class name to apply to modal container
+* @param {Children} props.children modal content can be specified as chld elements
+* @param {ReactElement} props.component modal content can be specified as a component type
+* @param {Object} props.props Props to be passed to the react component specified by the component property.
+*/
 function ModalRoute({ path, parentPath, className, children, component, exact, props, match, history }: Props): React.Element<*> {
 
   const navToParent = () => {
