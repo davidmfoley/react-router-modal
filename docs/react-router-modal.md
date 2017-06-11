@@ -42,9 +42,12 @@ _Overriding the default class names_
   backdropClassName='modal-backdrop'
   modalClassName='modal'
 />
+```
 
+_DOM structure_
 
-Note that modals are made "modal" via CSS styles, and end up rendered like the following in the DOM (with two modals, for example):
+```javascript
+// Note that modals are made "modal" via CSS styles, and end up rendered like the following in the DOM (with two modals, for example):
 <div className={containerClassName'>
   <div>
     <div className={backdropClassName} />
