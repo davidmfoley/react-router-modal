@@ -3485,6 +3485,10 @@ react-router-dom@^4.1.1:
     prop-types "^15.5.4"
     react-router "^4.1.1"
 
+react-router-modal@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/react-router-modal/-/react-router-modal-1.1.6.tgz#16514725e2f6acfe0d0a53501bbc9a81d8b41c6b"
+
 react-router@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-4.1.1.tgz#d448f3b7c1b429a6fbb03395099949c606b1fe95"

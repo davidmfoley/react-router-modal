@@ -1,6 +1,6 @@
 {
   "name": "react-router-modal",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "simple react router modal",
   "main": "lib/index.js",
   "repository": "http://github.com/davidmfoley/react-router-modal",
@@ -16,7 +16,7 @@
     "build:clean": "rimraf lib",
     "build:lib": "babel -d lib --ignore '**/*.test.js' src",
     "build:flow": "flow-copy-source -v  src lib",
-    "build:docs": "mkdir -p docs/ && documentation build src/ -f md -o docs/react-router-modal.md",
+    "build:docs": "mkdir -p docs/ && documentation build --config docs/documentation.yml -f md -o README.md",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
@@ -52,5 +52,6 @@
     "rimraf": "^2.6.1",
     "watch": "^1.0.2"
   },
-  "dependencies": {}
+  "dependencies": {
+  }
 }
