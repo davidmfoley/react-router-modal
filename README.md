@@ -2,15 +2,13 @@
 
 ### Table of Contents
 
--   [Setup](#setup)
+-   [react-router-modal](#react-router-modal)
 -   [Examples](#examples)
 -   [ModalContainer](#modalcontainer)
 -   [ModalRoute](#modalroute)
 -   [Modal](#modal)
 -   [ModalLink](#modallink)
 -   [default](#default)
-
-## Setup
 
 ## react-router-modal
 
@@ -40,7 +38,7 @@ TBH, if you are looking at this package you probably already have these, but you
 
 For ex: `yarn add react-router-dom react react-dom`.
 
-## Getting started
+### Getting started
 
 To add react-router-modal to your app:
 
@@ -75,7 +73,8 @@ See also: <https://github.com/davidmfoley/react-router-modal-examples/blob/maste
 import { ModalContainer, ModalRoute } from 'react-router-modal';
 import { BrowserRouter, Link } from 'react-router-dom';
 
-// if using webpack for css - YMMV
+// assumes webpack loader for css
+// ... or include this css however you do that in your project ...
 import 'react-router-modal/css/react-router-modal.css'
 
 function FooModal() {

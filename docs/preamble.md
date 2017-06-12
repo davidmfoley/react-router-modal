@@ -1,5 +1,3 @@
-## react-router-modal
-
 A simple way to handle showing modals with react-router version 4.
 
 Component docs: https://github.com/davidmfoley/react-router-modal/blob/master/docs/react-router-modal.md
@@ -26,7 +24,7 @@ TBH, if you are looking at this package you probably already have these, but you
 
 For ex: `yarn add react-router-dom react react-dom`.
 
-## Getting started
+### Getting started
 
 To add react-router-modal to your app:
 
