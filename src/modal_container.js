@@ -176,11 +176,11 @@ export default class ModalContainer extends React.Component {
     const modals = this.getSortedModals();
 
     if (modals.length === 0) {
-      document.body && bodyModalOpenClassName && document.body.classList.remove(bodyModalOpenClassName);
+      document && document.body && bodyModalOpenClassName && document.body.classList.remove(bodyModalOpenClassName);
       return null;
     }
 
-    document.body && bodyModalOpenClassName && document.body.classList.add(bodyModalOpenClassName);
+    document && document.body && bodyModalOpenClassName && document.body.classList.add(bodyModalOpenClassName);
 
     return (
       <div className={containerClassName}>
