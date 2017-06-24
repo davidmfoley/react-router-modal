@@ -66,9 +66,9 @@ type State = {
 
 export default class Modal extends React.Component {
   props: Props
-  state: State
+  state: State = {}
 
-  componentDidMount() {
+  componentWillMount() {
     const { className, children, component, stackOrder, props, onBackdropClick } = this.props;
     this.setState({
       id: mountModal({
