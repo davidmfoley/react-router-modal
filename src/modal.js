@@ -68,9 +68,9 @@ export default class Modal extends React.Component {
   props: Props
   state: State = {}
 
-  componentWillMount() {
+  constructor() {
     const { className, children, component, stackOrder, props, onBackdropClick } = this.props;
-    this.setState({
+    this.state = {
       id: mountModal({
         component,
         children,
@@ -79,7 +79,7 @@ export default class Modal extends React.Component {
         onBackdropClick,
         className
       })
-    });
+    };
   }
 
   componentWillReceiveProps(next: Props) {
