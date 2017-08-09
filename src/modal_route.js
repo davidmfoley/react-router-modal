@@ -3,17 +3,19 @@ import React from 'react';  // eslint-disable-line no-unused-vars
 import { Route, withRouter } from 'react-router-dom';
 import Modal from './modal';
 
+type Match  = { url: string, params: any }
+
 type Props = {
-  match: { url: string },
+  match: Match,
   history: { push: Function },
   parentPath?: string,
   path: string,
   children?: any,
   component?: any,
   exact?: boolean,
-  props?: any,
+  props?: Object,
   className?: string,
-  parentPath?: string | (match: { url: string }) => string,
+  parentPath?: string | (match: Match) => string,
 }
 
 
@@ -39,14 +41,24 @@ function getStackOrder(match) {
 * When the route matches, the modal is shown.
 * If multiple routes match, the modals will be stacked based on the length of the path that is matched.
 *
+* The component rendered in the modal will receive the following props:
+*
+* @param {string} parentPath - Either the parentPath specified in the ModalRoute, or a calculated value based on matched url
+* @param {string} closeModal A convenience method to close the modal by navigating to the parentPath
 */
 function ModalRoute({ path, parentPath, className, children, component, exact, props, match, history }: Props): React.Element<*> {
+  const getParentPath = (match: Match): string => {
+    if (typeof(parentPath) === 'function') {
+      return parentPath(match);
+    }
+    if (parentPath) return parentPath;
+    if (match.params[0]) return match.params[0];
+    if (match.params[0] === '') return '/';
+    return match.url;
+  }
 
   const navToParent = () => {
-    if (typeof(parentPath) === 'function') {
-      return history.push(parentPath(match));
-    }
-    history.push(parentPath || match.url);
+    history.push(getParentPath(match));
   };
 
   return (
@@ -54,7 +66,14 @@ function ModalRoute({ path, parentPath, className, children, component, exact, p
       <Modal
         component={component}
         children={children}
-        props={{...props, match, location, history}}
+        props={{
+          ...props,
+          match,
+          location,
+          history,
+          parentPath: getParentPath(match),
+          closeModal: () => history.push(getParentPath(match))
+        }}
         className={className}
         stackOrder={getStackOrder(match)}
         onBackdropClick={navToParent}

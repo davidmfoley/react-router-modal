@@ -10,32 +10,38 @@ import chai from 'chai';
 
 let expect = chai.expect;
 
-function FooModal() {
-  return <div>FOO</div>;
-}
-
-function BarModal() {
-  return <div>BAR</div>;
-}
-
-function BazModal() {
-  return <div>BAR</div>;
-}
-
-function Wrapper() {
-  return (
-    <div>
-      <ModalContainer backdropClassName='test-backdrop'/>
-      <ModalRoute component={FooModal} path='*/foo' className='test-modal test-modal-foo'/>
-      <ModalRoute component={BarModal} path='*/bar' className='test-modal test-modal-bar'/>
-    </div>
-  );
-}
-
-const RouterWrapper = withRouter(Wrapper);
 
 describe('ModalRoute', () => {
   let wrapper: ReactWrapper;
+  let barProps: Object;
+  let fooProps: Object;
+
+  function FooModal(props) {
+    fooProps = props;
+    return <div>FOO</div>;
+  }
+
+  function BarModal(props) {
+    barProps = props;
+    return <div>BAR</div>;
+  }
+
+  function BazModal() {
+    return <div>BAR</div>;
+  }
+
+  function Wrapper() {
+    return (
+      <div>
+        <ModalContainer backdropClassName='test-backdrop'/>
+        <ModalRoute component={FooModal} path='*/foo' className='test-modal test-modal-foo'/>
+        <ModalRoute component={BarModal} path='*/bar' className='test-modal test-modal-bar'/>
+      </div>
+    );
+  }
+
+
+  const RouterWrapper = withRouter(Wrapper);
 
   afterEach(() => { wrapper.unmount(); });
 
@@ -82,6 +88,11 @@ describe('ModalRoute', () => {
       expect(wrapper.find('.test-modal-bar').length).to.eq(1);
     });
 
+    it('injects parentPath prop into rendered component', () => {
+      expect(fooProps.parentPath).to.eq('/');
+      expect(barProps.parentPath).to.eq('/foo');
+    });
+
     it('renders modals in order by matched path length', () => {
       const modalWrappers = wrapper.find('.test-modal');
       expect(modalWrappers.get(0).className).to.eq('test-modal test-modal-foo');
@@ -113,7 +124,7 @@ describe('ModalRoute', () => {
     });
 
     describe('as function', () => {
-      function testParentPathHandler(match) {
+      function testParentPathHandler() {
         return '/foo';
       }
 
