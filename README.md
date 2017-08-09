@@ -161,16 +161,20 @@ _DOM structure_
 
 A react-router Route that shows a modal when the location pathname matches.
 
+The component rendered in the modal will receive the following props:
+
 **Parameters**
 
 -   `_ref`  
+-   `parentPath` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Either the parentPath specified in the ModalRoute, or a calculated value based on matched url
+-   `closeModal` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A convenience method to close the modal by navigating to the parentPath
 -   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
     -   `props.path` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** path to match
     -   `props.exact` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set, only show modal if route exactly matches path.
     -   `props.parentPath` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** path to navigate to when backdrop is clicked
     -   `props.className` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to modal container
     -   `props.children` **Children** modal content can be specified as chld elements
-    -   `props.component` **ReactElement** modal content can be specified as a component type
+    -   `props.component` **ReactComponent** modal content can be specified as a component type. The component will be passed `parentPath` and `closeModal` props, in addition to the specified props, and the withRouter props.
     -   `props.props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Props to be passed to the react component specified by the component property.When the route matches, the modal is shown.
         If multiple routes match, the modals will be stacked based on the length of the path that is matched.
 
