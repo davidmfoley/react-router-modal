@@ -8,7 +8,6 @@ type Match  = { url: string, params: any }
 type Props = {
   match: Match,
   history: { push: Function },
-  parentPath?: string,
   path: string,
   children?: any,
   component?: any,
@@ -27,26 +26,29 @@ function getStackOrder(match) {
 /**
 * A react-router Route that shows a modal when the location pathname matches.
 *
+* The component rendered in the modal will receive the following props:
+*
+* @param {string} parentPath - Either the parentPath specified in the ModalRoute, or a calculated value based on matched url
+* @param {string} closeModal A convenience method to close the modal by navigating to the parentPath
+*
 * @param {Object} props
 * @param {String} props.path path to match
 * @param {Boolean} props.exact If set, only show modal if route exactly matches path.
 * @param {String} props.parentPath path to navigate to when backdrop is clicked
 *
 * @param {String} props.className class name to apply to modal container
+*
 * @param {Children} props.children modal content can be specified as chld elements
-* @param {ReactElement} props.component modal content can be specified as a component type
+* @param {ReactComponent} props.component modal content can be specified as a component type. The component will be passed `parentPath` and `closeModal` props, in addition to the specified props, and the withRouter props.
+*
 * @param {Object} props.props Props to be passed to the react component specified by the component property.
 *
 *
 * When the route matches, the modal is shown.
 * If multiple routes match, the modals will be stacked based on the length of the path that is matched.
 *
-* The component rendered in the modal will receive the following props:
-*
-* @param {string} parentPath - Either the parentPath specified in the ModalRoute, or a calculated value based on matched url
-* @param {string} closeModal A convenience method to close the modal by navigating to the parentPath
 */
-function ModalRoute({ path, parentPath, className, children, component, exact, props, match, history }: Props): React.Element<*> {
+function ModalRoute({ path, parentPath, className, children, component, exact, props }: Props): React.Element<*> {
   const getParentPath = (match: Match): string => {
     if (typeof(parentPath) === 'function') {
       return parentPath(match);
@@ -56,10 +58,6 @@ function ModalRoute({ path, parentPath, className, children, component, exact, p
     if (match.params[0] === '') return '/';
     return match.url;
   }
-
-  const navToParent = () => {
-    history.push(getParentPath(match));
-  };
 
   return (
     <Route path={path} exact={exact} render={({match, location, history}) => (
@@ -76,7 +74,7 @@ function ModalRoute({ path, parentPath, className, children, component, exact, p
         }}
         className={className}
         stackOrder={getStackOrder(match)}
-        onBackdropClick={navToParent}
+        onBackdropClick={() => history.push(getParentPath(match))}
       />
     )} />
   );
