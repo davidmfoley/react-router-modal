@@ -2,7 +2,6 @@
 import React from 'react';
 import { mountModal, updateModal, unmountModal } from './modal_controller';
 import type { ModalIdentifier } from './types';
-import PropTypes from 'prop-types';
 
 type Props = {
   component?: any,
@@ -91,7 +90,7 @@ export default class Modal extends React.Component<Props, State> {
   }
 
   static contextTypes = {
-    setId: PropTypes.number
+    setId: () => {}
   }
 
   componentWillReceiveProps(next: Props) {

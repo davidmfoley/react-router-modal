@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import type {
   ModalDisplayInfo,
@@ -18,7 +17,7 @@ export default class ModalWithBackdrop extends React.Component<*> {
   }
 
   static childContextTypes = {
-    setId: PropTypes.number
+    setId: () => {}
   }
 
   render() {
