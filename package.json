@@ -9,7 +9,7 @@
   "scripts": {
     "test": "npm run -s test:mocha && npm run -s test:flow && npm run -s test:lint",
     "test:flow": "flow",
-    "test:mocha": "mocha --compilers js:babel-register --require test/setup.js test/*test.js",
+    "test:mocha": "mocha --compilers js:babel-register --require test/setup.js test/*test.js --reporter mocha-fengshui-reporter ",
     "test:lint": "eslint src/",
     "watch:test": "watch 'npm test' ./src ./test",
     "watch:build": "watch 'npm run build' ./src",
@@ -43,9 +43,11 @@
     "eslint": "^3.19.0",
     "eslint-plugin-flowtype": "^2.34.0",
     "eslint-plugin-react": "^7.0.1",
+    "flow-bin": "^0.57.3",
     "flow-copy-source": "^1.1.0",
     "jsdom": "^11.0.0",
     "mocha": "^3.4.2",
+    "mocha-fengshui-reporter": "^1.1.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router-dom": "^4.1.1",
@@ -54,5 +56,6 @@
     "watch": "^1.0.2"
   },
   "dependencies": {
+    "prop-types": "^15.6.0"
   }
 }

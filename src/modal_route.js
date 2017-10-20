@@ -48,7 +48,7 @@ function getStackOrder(match) {
 * If multiple routes match, the modals will be stacked based on the length of the path that is matched.
 *
 */
-function ModalRoute({ path, parentPath, className, children, component, exact, props }: Props): React.Element<*> {
+function ModalRoute({ path, parentPath, className, children, component, exact, props }: Props): any {
   const getParentPath = (match: Match): string => {
     if (typeof(parentPath) === 'function') {
       return parentPath(match);

@@ -1,74 +1,16 @@
 // @flow
 import React from 'react';
-import type { ModalDisplayInfo, ModalIdentifier } from './types';
 
-let nextIdValue: ModalIdentifier = 0;
-let hasContainer = false;
+import type {
+  ModalIdentifier,
+} from './types';
 
-type MountedModal = {
-  id: ModalIdentifier,
-  info: ModalDisplayInfo
-}
+import {
+  setModalSetIdsHandler,
+  clearModalSetIdsHandler
+} from './modal_controller';
 
-type ModalsHandler = (modals: MountedModal[]) => void;
-
-let modals: MountedModal[] = [];
-
-let notifyChanged: ModalsHandler = () => {}
-
-function clearHandler() {
-  notifyChanged = () => {};
-}
-
-function firstMount() {
-  return nextId === 0;
-}
-
-function setHandler(handler: ModalsHandler) {
-  hasContainer = true;
-  notifyChanged = handler;
-  notifyChanged(modals);
-}
-
-function nextId() : ModalIdentifier {
-  return nextIdValue++;
-}
-
-function warnIfNoContainer() {
-  if (!hasContainer) {
-    console.log(`react-router-modal warning: Modal was mounted but no <ModalContainer /> found`); //eslint-disable-line
-  }
-}
-
-export function mountModal(info: ModalDisplayInfo): ModalIdentifier {
-  if (firstMount() && !hasContainer) {
-    setTimeout(warnIfNoContainer, 1000);
-  }
-
-  const id = nextId();
-  modals.push({
-    id,
-    info
-  });
-  notifyChanged(modals);
-  return id;
-}
-
-export function updateModal(id: ModalIdentifier, info: ModalDisplayInfo): void {
-  modals = modals.map(m => (
-    m.id === id ? {
-      id,
-      info
-    } : m
-  ));
-
-  notifyChanged(modals);
-}
-
-export function unmountModal(id: ModalIdentifier) {
-  modals = modals.filter(m => m.id !== id);
-  notifyChanged(modals);
-}
+import ModalSetContainer from './modal_set_container';
 
 type Props = {
   containerClassName?: string,
@@ -79,7 +21,7 @@ type Props = {
 }
 
 type State = {
-  modals: MountedModal[]
+  setIds: ModalIdentifier[]
 }
 
 /**
@@ -127,11 +69,10 @@ type State = {
  * </div>
  *
  */
-
-export default class ModalContainer extends React.Component {
+export default class ModalContainer extends React.Component<Props, State> {
   props: Props
-  state: State ={
-    modals: []
+  state: State = {
+    setIds: []
   }
 
   static defaultProps = {
@@ -142,27 +83,15 @@ export default class ModalContainer extends React.Component {
   }
 
   componentDidMount() {
-    setHandler(this.onModals.bind(this));
+    setModalSetIdsHandler(this.onSetIds);
   }
 
   componentWillUnmount() {
-    clearHandler();
+    clearModalSetIdsHandler();
   }
 
-  onModals(modals: MountedModal[]) {
-    this.setState({modals});
-  }
-
-  getSortedModals(): MountedModal[] {
-    const sorted = [...this.state.modals];
-    sorted.sort(this.compareModals);
-    return sorted;
-  }
-
-  compareModals(a: MountedModal, b: MountedModal): number {
-    const stackOrderDiff = (a.info.stackOrder || 0) - (b.info.stackOrder || 0);
-    if (stackOrderDiff !== 0) return stackOrderDiff;
-    return a.id - b.id;
+  onSetIds = (setIds: number[]) => {
+    this.setState({setIds});
   }
 
   render() {
@@ -173,10 +102,11 @@ export default class ModalContainer extends React.Component {
       modalClassName,
     } = this.props;
 
-    const modals = this.getSortedModals();
+
+    const { setIds } = this.state;
 
     if (typeof document !== 'undefined') {
-      if (modals.length === 0) {
+      if (setIds.length === 0) {
         document.body && bodyModalOpenClassName && document.body.classList.remove(bodyModalOpenClassName);
       }
       else {
@@ -184,43 +114,17 @@ export default class ModalContainer extends React.Component {
       }
     }
 
-    if (modals.length === 0) {
-      return null;
-    }
     return (
-      <div className={containerClassName}>
-        {modals.map(m => <ModalWithBackdrop
-          key={m.id}
-          children={m.info.children}
+      <div>
+        {setIds.map(id => <ModalSetContainer
+          key={id}
+          setId={id}
           backdropClassName={backdropClassName}
           containerClassName={containerClassName}
-          modalClassName={m.info.className || modalClassName}
-          onBackdropClick={m.info.onBackdropClick}
-          component={m.info.component}
-          props={m.info.props || {}}
+          modalClassName={modalClassName}
         />)}
       </div>
     );
   }
 }
 
-function ModalWithBackdrop({
-  children,
-  component,
-  props,
-  onBackdropClick,
-  backdropClassName,
-  modalClassName
-}: ModalDisplayInfo) {
-  const Component = component;
-
-  return (
-    <div>
-      <div className={backdropClassName || ''} onClick={onBackdropClick} />
-      <div className={modalClassName || ''}>
-        {!Component && children}
-        {Component && <Component {...props} />}
-      </div>
-    </div>
-  );
-}
