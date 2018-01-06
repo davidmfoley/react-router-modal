@@ -49,3 +49,22 @@ See also: https://github.com/davidmfoley/react-router-modal-examples/blob/master
 ```
 
 4. Navigate to /modal-test in your app. You should see a Modal with the contents "Hello".
+
+### Gotchas
+
+#### My modals are not showing at all
+
+1. Did you render a ModalContainer?
+
+2. Did you include the CSS to style the modals and their backdrops?
+
+#### I see my modal content but the component "behind" it is not rendering.
+
+To display a modal component "on top" of another component, *both* routes (the ModalRoute and the Route that renders the other component) must match.
+
+If you are seeing modal content but the component that you expect to see "behind" the modal is not rendering, you should check for the following:
+
+1. Did you put both routes inside a `<Switch />`, so only one of them matches?
+
+2. Did you use `exact` on the `<Route />` that contains the component that is meant to render "under" the modal?
+
