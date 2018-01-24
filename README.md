@@ -212,6 +212,7 @@ child elements of the Modal.
     -   `props.children` **Children** Modal content can be specified as chld elements
     -   `props.component` **Component** React component to render in the modal.
     -   `props.props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** props to pass to the react component specified by the component property
+    -   `props.onBackdropClick` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** handler to be invoked when the modal backdrop is clicked
 
 **Examples**
 
