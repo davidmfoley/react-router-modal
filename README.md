@@ -137,6 +137,7 @@ When no modals are shown, nothing is rendered into the DOM.
     -   `props.bodyModalClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to the <body /> when any modals are shown (optional, default `react-router-modal__modal-open`)
     -   `props.onFirstModalMounted` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** handler invoked when first modal is shown
     -   `props.onLastModalUnmounted` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** handler invoked when last modal is hidden
+    -   `props.autoRestoreScrollPosition` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Automatically restore the window scroll position when the last modal is unmounted. This is useful in cases where you have made the body position fixed on small screen widths, usually to work around mobaile browser scrolling behavior. Set this to false if you do not want this behavior. (optional, default `true`)
 
 **Examples**
 
