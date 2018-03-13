@@ -36,6 +36,7 @@ function getStackOrder(match) {
 * @param {String} props.path path to match
 * @param {Boolean} props.exact If set, only show modal if route exactly matches path.
 * @param {String} props.parentPath path to navigate to when backdrop is clicked
+* @param {String} props.onBackdropClick Handler to invoke when backdrop is clicked. If set, overrides the navigation to parentPath, so you need to handle that yourself.
 *
 * @param {String} props.className class name to apply to modal container
 *
