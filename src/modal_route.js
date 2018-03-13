@@ -8,6 +8,7 @@ type Match  = { url: string, params: any }
 type Props = {
   match: Match,
   history: { push: Function },
+  onBackdropClick?: Function,
   path: string,
   children?: any,
   component?: any,
@@ -48,7 +49,7 @@ function getStackOrder(match) {
 * If multiple routes match, the modals will be stacked based on the length of the path that is matched.
 *
 */
-function ModalRoute({ path, parentPath, className, children, component, exact, props }: Props): any {
+function ModalRoute({ path, parentPath, className, children, component, exact, props, onBackdropClick }: Props): any {
   const getParentPath = (match: Match): string => {
     if (typeof(parentPath) === 'function') {
       return parentPath(match);
@@ -74,7 +75,7 @@ function ModalRoute({ path, parentPath, className, children, component, exact, p
         }}
         className={className}
         stackOrder={getStackOrder(match)}
-        onBackdropClick={() => history.push(getParentPath(match))}
+        onBackdropClick={onBackdropClick || (() => history.push(getParentPath(match)))}
       />
     )} />
   );

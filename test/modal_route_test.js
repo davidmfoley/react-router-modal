@@ -100,6 +100,36 @@ describe('ModalRoute', () => {
     });
   });
 
+  describe('onBackdropClick', () => {
+    let handlerInvoked;
+    const onBackdropClick = () => handlerInvoked = true;
+    beforeEach(() => {
+      handlerInvoked = false;
+
+      wrapper = mount(
+        <MemoryRouter initialEntries = {['/foo/bar']}>
+          <div>
+            <ModalRoute component={BarModal} path='*/bar' className='test-string' parentPath='/foo' onBackdropClick={onBackdropClick} />
+            <ModalContainer backdropClassName='test-backdrop'/>
+          </div>
+        </MemoryRouter>
+      );
+    });
+
+    it('invokes the custom handler when backdrop is clicked', () => {
+      expect(wrapper.find('.test-string').length).to.eq(1);
+
+      const backdrop = wrapper.find('.test-backdrop');
+      backdrop.simulate('click');
+
+      expect(handlerInvoked).to.eq(true);
+    });
+
+    it('does not invoke the handler until the click', () => {
+      expect(handlerInvoked).to.eq(false);
+    });
+  });
+
   describe('parentPath', () => {
     describe('as string', () => {
       beforeEach(() => {
