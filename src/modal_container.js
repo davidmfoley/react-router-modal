@@ -17,10 +17,14 @@ type Props = {
   backdropClassName?: string,
   modalClassName?: string,
   bodyModalOpenClassName?: string,
+  onLastModalUnmounted?: Function,
+  onFirstModalMounted?: Function,
   children?: any,
 }
 
 type State = {
+  scrollX: number,
+  scrollY: number,
   setIds: ModalIdentifier[]
 }
 
@@ -36,6 +40,8 @@ type State = {
  * @param {String} [props.backdropClassName=react-router-modal__backdrop] class name to apply to modal backdrops
  * @param {String} [props.containerClassName=react-router-modal__container] class name to apply to the container itself
  * @param {String} [props.bodyModalClassName=react-router-modal__modal-open] class name to apply to the <body /> when any modals are shown
+ * @param {Function} [props.onFirstModalMounted] handler invoked when first modal is shown
+ * @param {Function} [props.onLastModalUnmounted] handler invoked when last modal is hidden
  *
  * @example <caption>Using default class names</caption>
  *
@@ -72,6 +78,8 @@ type State = {
 export default class ModalContainer extends React.Component<Props, State> {
   props: Props
   state: State = {
+    scrollX: 0,
+    scrollY: 0,
     setIds: []
   }
 
@@ -91,8 +99,38 @@ export default class ModalContainer extends React.Component<Props, State> {
   }
 
   onSetIds = (setIds: number[]) => {
-    this.setState({setIds});
+    let nextState: any = {setIds};
+    const anyModalsBefore = !!this.state.setIds.length;
+    const anyModalsAfter = !!setIds.length;
+
+    const showingFirstModal = anyModalsAfter && !anyModalsBefore;
+    const hidingLastModal = !anyModalsAfter && anyModalsBefore;
+    const supportsScrollFix = (typeof window !== 'undefined' && typeof window.scroll === 'function');
+
+    if (showingFirstModal) {
+      if (supportsScrollFix) {
+        nextState.scrollX = window.scrollX;
+        nextState.scrollY = window.scrollY;
+      }
+      this.afterRender = this.props.onFirstModalMounted;
+    }
+    else if (hidingLastModal) {
+      this.afterRender = () => {
+        if (supportsScrollFix) {
+          window.scroll(this.state.scrollX, this.state.scrollY);
+        }
+
+        const { onLastModalUnmounted } = this.props;
+        if (onLastModalUnmounted) {
+          onLastModalUnmounted();
+        }
+      };
+    }
+
+    this.setState(nextState);
   }
+
+  afterRender: ?Function
 
   render() {
     const {
@@ -114,10 +152,18 @@ export default class ModalContainer extends React.Component<Props, State> {
       }
     }
 
+    if (
+      typeof window !== 'undefined' &&
+      typeof window.requestAnimationFrame !== 'undefined'
+      && this.afterRender
+    ) {
+      window.requestAnimationFrame(this.afterRender);
+      this.afterRender = null;
+    }
+
     return (
       <div>
-        {setIds.map(id => <ModalSetContainer
-          key={id}
+        {setIds.map(id => <ModalSetContainer key={id}
           setId={id}
           backdropClassName={backdropClassName}
           containerClassName={containerClassName}
