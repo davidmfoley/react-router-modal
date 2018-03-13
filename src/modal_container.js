@@ -19,6 +19,7 @@ type Props = {
   bodyModalOpenClassName?: string,
   onLastModalUnmounted?: Function,
   onFirstModalMounted?: Function,
+  autoRestoreScrollPosition?: boolean,
   children?: any,
 }
 
@@ -42,6 +43,7 @@ type State = {
  * @param {String} [props.bodyModalClassName=react-router-modal__modal-open] class name to apply to the <body /> when any modals are shown
  * @param {Function} [props.onFirstModalMounted] handler invoked when first modal is shown
  * @param {Function} [props.onLastModalUnmounted] handler invoked when last modal is hidden
+ * @param {boolean} [props.autoRestoreScrollPosition=true] Automatically restore the window scroll position when the last modal is unmounted. This is useful in cases where you have made the body position fixed on small screen widths, usually to work around mobaile browser scrolling behavior. Set this to false if you do not want this behavior.
  *
  * @example <caption>Using default class names</caption>
  *
@@ -84,6 +86,7 @@ export default class ModalContainer extends React.Component<Props, State> {
   }
 
   static defaultProps = {
+    autoRestoreScrollPosition: true,
     modalClassName: 'react-router-modal__modal',
     backdropClassName: 'react-router-modal__backdrop',
     containerClassName: 'react-router-modal__container',
@@ -99,6 +102,7 @@ export default class ModalContainer extends React.Component<Props, State> {
   }
 
   onSetIds = (setIds: number[]) => {
+    const { onFirstModalMounted, onLastModalUnmounted, autoRestoreScrollPosition } = this.props;
     let nextState: any = {setIds};
     const anyModalsBefore = !!this.state.setIds.length;
     const anyModalsAfter = !!setIds.length;
@@ -106,21 +110,21 @@ export default class ModalContainer extends React.Component<Props, State> {
     const showingFirstModal = anyModalsAfter && !anyModalsBefore;
     const hidingLastModal = !anyModalsAfter && anyModalsBefore;
     const supportsScrollFix = (typeof window !== 'undefined' && typeof window.scroll === 'function');
+    const shouldAutoScroll = autoRestoreScrollPosition && supportsScrollFix;
 
     if (showingFirstModal) {
-      if (supportsScrollFix) {
+      if (shouldAutoScroll) {
         nextState.scrollX = window.scrollX;
         nextState.scrollY = window.scrollY;
       }
-      this.afterRender = this.props.onFirstModalMounted;
+      this.afterRender = onFirstModalMounted;
     }
     else if (hidingLastModal) {
       this.afterRender = () => {
-        if (supportsScrollFix) {
+        if (shouldAutoScroll) {
           window.scroll(this.state.scrollX, this.state.scrollY);
         }
 
-        const { onLastModalUnmounted } = this.props;
         if (onLastModalUnmounted) {
           onLastModalUnmounted();
         }

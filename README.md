@@ -135,6 +135,8 @@ When no modals are shown, nothing is rendered into the DOM.
     -   `props.backdropClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to modal backdrops (optional, default `react-router-modal__backdrop`)
     -   `props.containerClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to the container itself (optional, default `react-router-modal__container`)
     -   `props.bodyModalClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to the <body /> when any modals are shown (optional, default `react-router-modal__modal-open`)
+    -   `props.onFirstModalMounted` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** handler invoked when first modal is shown
+    -   `props.onLastModalUnmounted` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** handler invoked when last modal is hidden
 
 **Examples**
 
@@ -190,6 +192,7 @@ The component rendered in the modal will receive the following props:
     -   `props.path` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** path to match
     -   `props.exact` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set, only show modal if route exactly matches path.
     -   `props.parentPath` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** path to navigate to when backdrop is clicked
+    -   `props.onBackdropClick` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Handler to invoke when backdrop is clicked. If set, overrides the navigation to parentPath, so you need to handle that yourself.
     -   `props.className` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to modal container
     -   `props.children` **Children** modal content can be specified as chld elements
     -   `props.component` **ReactComponent** modal content can be specified as a component type. The component will be passed `parentPath` and `closeModal` props, in addition to the specified props, and the withRouter props.
