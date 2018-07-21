@@ -16,7 +16,11 @@ type Props = {
   setId: ModalIdentifier,
   containerClassName?: string,
   backdropClassName?: string,
+  backdropInClassName?: string,
+  backdropOutClassName?: string,
   modalClassName?: string,
+  modalInClassName?: string,
+  modalOutClassName?: string,
   children?: any,
 }
 
@@ -45,8 +49,12 @@ export default class ModalSetContainer extends React.Component<Props, State> {
   render() {
     const {
       backdropClassName,
+      backdropInClassName,
+      backdropOutClassName,
       containerClassName,
       modalClassName,
+      modalInClassName,
+      modalOutClassName,
     } = this.props;
 
     const { modals } = this.state;
@@ -61,8 +69,12 @@ export default class ModalSetContainer extends React.Component<Props, State> {
           key={m.id}
           children={m.info.children}
           backdropClassName={backdropClassName}
+          backdropInClassName={m.info.backdropInClassName || backdropInClassName}
+          backdropOutClassName={m.info.backdropOutClassName || backdropOutClassName}
           containerClassName={containerClassName}
           modalClassName={m.info.className || modalClassName}
+          modalInClassName={m.info.inClassName || modalInClassName}
+          modalOutClassName={m.info.outClassName || modalOutClassName}
           onBackdropClick={m.info.onBackdropClick}
           component={m.info.component}
           props={m.info.props || {}}

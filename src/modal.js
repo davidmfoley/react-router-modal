@@ -9,6 +9,12 @@ type Props = {
   props?: Object,
   stackOrder?: number,
   className?: string,
+  inClassName?: string,
+  outClassName?: string,
+  backdropClassName?: string,
+  backdropInClassName?: string,
+  backdropOutClassName?: string,
+  outDelay?: number,
   onBackdropClick?: Function
 }
 
@@ -75,7 +81,20 @@ export default class Modal extends React.Component<Props, State> {
   context: Context
 
   componentWillMount() {
-    const { className, children, component, stackOrder, props, onBackdropClick } = this.props;
+    const {
+      className,
+      inClassName,
+      outClassName,
+      backdropClassName,
+      backdropInClassName,
+      backdropOutClassName,
+      outDelay,
+      children,
+      component,
+      stackOrder,
+      props,
+      onBackdropClick,
+    } = this.props;
 
     this.setState({
       modalId: mountModal({
@@ -85,17 +104,36 @@ export default class Modal extends React.Component<Props, State> {
         props: props || {},
         stackOrder,
         onBackdropClick,
-        className
+        className,
+        inClassName,
+        outClassName,
+        backdropClassName,
+        backdropInClassName,
+        backdropOutClassName,
+        outDelay
       })
     });
   }
 
   static contextTypes = {
-    setId: () => {}
+    setId: () => { }
   }
 
   componentWillReceiveProps(next: Props) {
-    const { className, children, component, stackOrder, props, onBackdropClick } = next;
+    const {
+      className,
+      inClassName,
+      outClassName,
+      backdropClassName,
+      backdropInClassName,
+      backdropOutClassName,
+      outDelay,
+      children,
+      component,
+      stackOrder,
+      props,
+      onBackdropClick,
+    } = next;
 
     updateModal(this.state.modalId, {
       component,
@@ -103,6 +141,12 @@ export default class Modal extends React.Component<Props, State> {
       props: props || {},
       stackOrder,
       onBackdropClick,
+      inClassName,
+      outClassName,
+      backdropClassName,
+      backdropInClassName,
+      backdropOutClassName,
+      outDelay,
       className
     });
   }

@@ -17,7 +17,8 @@
   },
 
   "env": {
-    "browser": true
+    "browser": true,
+    "node": true
   },
   "rules": {
     "react/no-children-prop": "off"

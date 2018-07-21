@@ -1,10 +1,10 @@
 // @flow
 import type {
   ModalDisplayInfo,
-  ModalIdentifier,
-  MountedModal,
-  ModalSetHandler,
-  ModalSetsHandler,
+    ModalIdentifier,
+    MountedModal,
+    ModalSetHandler,
+    ModalSetsHandler,
 } from './types';
 
 let nextIdValue: ModalIdentifier = 1;
@@ -13,7 +13,7 @@ let hasContainer = false;
 let modalSets: { [id: any]: MountedModal[] } = {};
 
 let setHandlers: { [id: any]: ModalSetHandler } = {};
-let setIdsHandler: ModalSetsHandler = () => {};
+let setIdsHandler: ModalSetsHandler = () => { };
 
 export function resetAll() {
   modalSets = {};
@@ -27,7 +27,7 @@ export function setModalSetIdsHandler(handler: ModalSetsHandler) {
 }
 
 export function clearModalSetIdsHandler() {
-  setIdsHandler = () => {};
+  setIdsHandler = () => { };
 }
 
 export function setModalSetHandler(id: ModalIdentifier, handler: ModalSetHandler) {
@@ -47,7 +47,7 @@ export function mountModal(info: ModalDisplayInfo): ModalIdentifier {
 
   const id = nextId();
 
-  info = Object.assign({setId: 0}, info);
+  info = Object.assign({ setId: 0 }, info);
   const setId = info.setId;
 
   let notifySetIds = false;
@@ -56,7 +56,7 @@ export function mountModal(info: ModalDisplayInfo): ModalIdentifier {
     notifySetIds = true;
   }
 
-  modalSets[setId].push({id, info, setId});
+  modalSets[setId].push({ id, info, setId });
   modalSets[setId].sort(compareModals);
 
   if (notifySetIds) {
@@ -102,7 +102,33 @@ function compareModals(a: MountedModal, b: MountedModal): number {
   return a.id - b.id;
 }
 
+function findModalById(id: ModalIdentifier) {
+  const setIds = getSetIds();
+  for(let i = 0; i < setIds.length; i++) {
+    let modals = modalSets[setIds[i]];
+    for(let j = 0; j < modals.length; j++) {
+      if (modals[j].id === id) return modals[j];
+    }
+  }
+}
+
+function getModalDelay(id: ModalIdentifier): number {
+  const modal = findModalById(id);
+  return (modal || {}).outDelay || 0;
+}
+
 export function unmountModal(id: ModalIdentifier) {
+  const delay = getModalDelay(id);
+
+  if (delay) {
+    return setTimeout(removeModal.bind(null, id), delay);
+  }
+  else {
+    removeModal(id);
+  }
+}
+
+function removeModal(id: ModalIdentifier) {
   const setIds = getSetIds();
   let foundSetId: ModalIdentifier;
   setIds.forEach(setId => {
@@ -129,7 +155,7 @@ function firstMount() {
   return nextIdValue === 0;
 }
 
-function nextId() : ModalIdentifier {
+function nextId(): ModalIdentifier {
   return nextIdValue++;
 }
 

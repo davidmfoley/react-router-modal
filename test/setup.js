@@ -2,6 +2,10 @@ const { JSDOM } = require('jsdom');
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
 const { window } = jsdom;
 
+global.requestAnimationFrame = window.requestAnimationFrame = fn => {
+  setTimeout(fn, 0);
+};
+
 function copyProps(src, target) {
   const props = Object.getOwnPropertyNames(src)
     .filter(prop => typeof target[prop] === 'undefined')

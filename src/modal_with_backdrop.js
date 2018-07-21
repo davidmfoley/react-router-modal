@@ -9,8 +9,14 @@ type Props = ModalDisplayInfo & {
   context: { setId: any }
 }
 
-export default class ModalWithBackdrop extends React.Component<*> {
+type State = {
+  rendered: boolean
+}
+
+export default class ModalWithBackdrop extends React.Component<Props, State> {
   props: Props
+  state: State = { rendered: false };
+  done = false;
 
   getChildContext() {
     return this.props.context;
@@ -20,6 +26,27 @@ export default class ModalWithBackdrop extends React.Component<*> {
     setId: () => {}
   }
 
+  componentDidMount() {
+    requestAnimationFrame(() => {
+      if (!this.done) {
+        this.setState({
+          rendered: true
+        });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.done = true;
+  }
+
+  getClassName(mainClassName?: string, inClassName?: string, outClassName?: string) {
+    const names: string[] = [mainClassName || ''];
+    if (this.state.rendered) names.push(inClassName || '');
+    if (this.props.hiding) names.push(outClassName || '');
+    return names.filter(n => !!n).join(' ') || '';
+  }
+
   render() {
     const {
       children,
@@ -27,15 +54,22 @@ export default class ModalWithBackdrop extends React.Component<*> {
       props,
       onBackdropClick,
       backdropClassName,
-      modalClassName
+      backdropInClassName,
+      backdropOutClassName,
+      modalClassName,
+      modalInClassName,
+      modalOutClassName,
     } = this.props;
+
+    const calculatedBackdropClassName = this.getClassName(backdropClassName, backdropInClassName, backdropOutClassName);
+    const calculatedModalClassName = this.getClassName(modalClassName, modalInClassName, modalOutClassName);
 
     const Component = component;
 
     return (
       <div>
-        <div className={backdropClassName || ''} onClick={onBackdropClick} />
-        <div className={modalClassName || ''}>
+        <div className={calculatedBackdropClassName} onClick={onBackdropClick} />
+        <div className={calculatedModalClassName}>
           {!Component && children}
           {Component && <Component {...props} context={this.props.context}/>}
         </div>

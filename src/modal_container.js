@@ -15,7 +15,12 @@ import ModalSetContainer from './modal_set_container';
 type Props = {
   containerClassName?: string,
   backdropClassName?: string,
+  backdropInClassName?: string,
+  backdropOutClassName?: string,
   modalClassName?: string,
+  modalInClassName?: string,
+  modalOutClassName?: string,
+  outDelay?: number,
   bodyModalOpenClassName?: string,
   onLastModalUnmounted?: Function,
   onFirstModalMounted?: Function,
@@ -139,11 +144,15 @@ export default class ModalContainer extends React.Component<Props, State> {
   render() {
     const {
       backdropClassName,
+      backdropInClassName,
+      backdropOutClassName,
       containerClassName,
       bodyModalOpenClassName,
       modalClassName,
+      modalInClassName,
+      modalOutClassName,
+      outDelay
     } = this.props;
-
 
     const { setIds } = this.state;
 
@@ -169,9 +178,14 @@ export default class ModalContainer extends React.Component<Props, State> {
       <div>
         {setIds.map(id => <ModalSetContainer key={id}
           setId={id}
+          outDelay={outDelay}
           backdropClassName={backdropClassName}
+          backdropInClassName={backdropInClassName}
+          backdropOutClassName={backdropOutClassName}
           containerClassName={containerClassName}
           modalClassName={modalClassName}
+          modalInClassName={modalInClassName}
+          modalOutClassName={modalOutClassName}
         />)}
       </div>
     );
