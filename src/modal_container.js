@@ -93,7 +93,11 @@ export default class ModalContainer extends React.Component<Props, State> {
   static defaultProps = {
     autoRestoreScrollPosition: true,
     modalClassName: 'react-router-modal__modal',
+    modalInClassName: 'react-router-modal__modal--in',
+    modalOutClassName: 'react-router-modal__modal--out',
     backdropClassName: 'react-router-modal__backdrop',
+    backdropInClassName: 'react-router-modal__backdrop--in',
+    backdropOutClassName: 'react-router-modal__backdrop--out',
     containerClassName: 'react-router-modal__container',
     bodyModalOpenClassName: 'react-router-modal__modal-open'
   }
