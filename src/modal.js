@@ -32,14 +32,26 @@ type Context = {
  *
  * The content that is shown is specified by *either* the "component" prop, or by
  * child elements of the Modal.
+ * 
  *
  * @param {Object} props
  * @param {Number} props.stackOrder order to stack modals, higher number means "on top"
- * @param {String} props.className class name to apply to modal container
  * @param {Children} props.children Modal content can be specified as chld elements
  * @param {Component} props.component React component to render in the modal.
  * @param {Object} props.props props to pass to the react component specified by the component property
  * @param {Function} props.onBackdropClick handler to be invoked when the modal backdrop is clicked
+ *
+ * The following properties are inherited from ModalContainer but can be overridden per Modal
+ * 
+ * @param {String} props.className class name to apply to modal container
+ * 
+ * Properties that support CSS Transitions:
+ * 
+ * @param {String} props.inClassName class name applied to modal immediately after it is shown to allow for css transitions
+ * @param {String} props.outClassName class name applied to modal before modal is hidden to allow for css transitions
+ * @param {String} props.backdropInClassName class name applied to backdrop immediately after it is shown to allow for css transitions
+ * @param {String} props.backdropOutClassName class name applied to backdrop before modal is hidden to allow for css transitions
+ * @param {String} props.outDelay delay, in milliseconds to wait when closing modal, to allow for css transitions to complete before ripping it out of the DOM
  *
  * @example <caption>Modals using a component and props, vs. child elements</caption>
  *
