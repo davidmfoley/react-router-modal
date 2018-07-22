@@ -69,7 +69,7 @@ export default class ModalSetContainer extends React.Component<Props, State> {
         {modals.map(m => <ModalWithBackdrop
           key={m.id}
           children={m.info.children}
-          backdropClassName={backdropClassName}
+          backdropClassName={m.info.backdropClassName || backdropClassName}
           outDelay={typeof m.info.outDelay === 'undefined' ? this.props.outDelay : m.info.outDelay}
           backdropInClassName={m.info.backdropInClassName || backdropInClassName}
           backdropOutClassName={m.info.backdropOutClassName || backdropOutClassName}

@@ -16,6 +16,7 @@ type Props = {
   props?: Object,
   className?: string,
   parentPath?: string | (match: Match) => string,
+  backdropClassName?: string,
   backdropInClassName?: string,
   backdropOutClassName?: string,
   inClassName?: string,
@@ -50,6 +51,7 @@ function getStackOrder(match) {
 * 
 * @param {String} [props.inClassName=react-router-modal__modal--in] class name applied to modal immediately after it is shown to allow for css transitions
 * @param {String} [props.outClassName=react-router-modal__modal--out] class name applied to modal before modal is hidden to allow for css transitions
+* @param {String} [props.backdropClassName=react-router-modal__backdrop] class name applied to backdrop
 * @param {String} [props.backdropInClassName=react-router-modal__backdrop--in] class name applied to backdrop immediately after it is shown to allow for css transitions
 * @param {String} [props.backdropOutClassName=react-router-modal__backdrop--out] class name applied to backdrop before modal is hidden to allow for css transitions
 * @param {String} [props.outDelay=0] delay, in milliseconds to wait when closing modal, to allow for css transitions to complete before ripping it out of the DOM
