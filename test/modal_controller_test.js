@@ -6,7 +6,8 @@ import {
   unmountModal,
   setModalSetIdsHandler,
   setModalSetHandler,
-  resetAll
+  resetAll,
+  setDefaultOutDelay
 } from '../src/modal_controller';
 
 import { expect } from 'chai';
@@ -104,5 +105,64 @@ describe('ModalController', () => {
         });
       });
     });
+  });
+
+  describe('unmounting a modal with defaultOutDelay', () => {
+    it('unmounts after a delay', done => {
+      setDefaultOutDelay(10);
+
+      const modalId = mountModal({
+        setId: 0,
+        outDelay: undefined
+      });
+
+      let calls = 0;
+      setModalSetHandler(0, modals => {
+        calls++;
+        if (calls === 1) {
+          expect(modals.length).to.eq(1);
+          expect(!!modals[0].info.out).to.eq(false);
+        }
+        if (calls === 2) {
+          expect(modals.length).to.eq(1);
+          expect(modals[0].info.out).to.eq(true);
+        }
+        if (calls === 3) {
+          expect(modals).to.eq(undefined);
+          done();
+        }
+      });
+
+      unmountModal(modalId);
+
+    })
+  });
+  describe('unmounting a modal with outDelay', () => {
+    it('unmounts after a delay', done => {
+      const modalId = mountModal({
+        outDelay: 10,
+        setId: 0
+      });
+
+      let calls = 0;
+      setModalSetHandler(0, modals => {
+        calls++;
+        if (calls === 1) {
+          expect(modals.length).to.eq(1);
+          expect(!!modals[0].info.out).to.eq(false);
+        }
+        if (calls === 2) {
+          expect(modals.length).to.eq(1);
+          expect(modals[0].info.out).to.eq(true);
+        }
+        if (calls === 3) {
+          expect(modals).to.eq(undefined);
+          done();
+        }
+      });
+
+      unmountModal(modalId);
+
+    })
   });
 });

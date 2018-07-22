@@ -13,38 +13,46 @@ function TestModalContent() {
 }
 
 describe('transitions', () => {
-  let wrapper: ReactWrapper;
+  let modal: ReactWrapper;
+  let container: ReactWrapper;
 
   describe('when a modal is shown', () => {
     beforeEach(() => {
+      container = mount(
+        <ModalContainer
+          modalClassName='modal'
+          backdropClassName='backdrop'
+          outDelay={20}
+        />
+      );
 
-      wrapper = mount(
+      modal = mount(
         <div>
           <Modal
             inClassName='modal-in'
             outClassName='modal-out'
             backdropInClassName='backdrop-in'
             backdropOutClassName='backdrop-out'
-            outDelay={500}
             component={TestModalContent}
             props={{}}
-          />
-          <ModalContainer
-            modalClassName='modal'
-            backdropClassName='backdrop'
           />
         </div>
       );
     });
 
-    afterEach(() => wrapper.unmount());
+    afterEach(done => {
+      modal && modal.unmount();
+      modal = null;
+      container.unmount();
+      setTimeout(done, 25);
+    });
 
     it('has the modal className but not the inClassName', () => {
-      expect(wrapper.find('.modal').hasClass('modal-in')).to.eq(false);
+      expect(container.find('.modal').hasClass('modal-in')).to.eq(false);
     });
 
     it('backdrop has the backdrop className but not the backdropInClassName', () => {
-      expect(wrapper.find('.backdrop').hasClass('backdrop-in')).to.eq(false);
+      expect(container.find('.backdrop').hasClass('backdrop-in')).to.eq(false);
     });
 
     describe('after initial render', () => {
@@ -53,17 +61,41 @@ describe('transitions', () => {
       });
 
       it('gets the inClassName', () => {
-        expect(wrapper.find('.modal').hasClass('modal-in')).to.eq(true);
+        expect(container.find('.modal').hasClass('modal-in')).to.eq(true);
       });
 
       it('backdrop gets the backDropInClassName', () => {
-        expect(wrapper.find('.backdrop').hasClass('backdrop-in')).to.eq(true);
+        expect(container.find('.backdrop').hasClass('backdrop-in')).to.eq(true);
       });
     });
-  });
 
-  describe('when a modal is hidden', () => {
-    it('has the outClassName', () => { });
-    it('is removed from dom after outDelay', () => { });
+    describe('when a modal is unmounted', () => {
+      beforeEach(() => {
+        modal.unmount();
+        modal = null;
+      });
+
+      it('has the outClassName', () => {
+        expect(container.find('.modal').hasClass('modal-out')).to.eq(true);
+      });
+
+      it('backdrop gets the backDropOutClassName', () => {
+        expect(container.find('.backdrop').hasClass('backdrop-out')).to.eq(true);
+      });
+
+      describe('after out delay', () => {
+        beforeEach(done => {
+          setTimeout(done, 20);
+
+        });
+        it('is removed from dom', () => {
+          expect(container.find('.modal').length).to.eq(0);
+        });
+
+        it('backdrop is removed from dom', () => {
+          expect(container.find('.backdrop').length).to.eq(0);
+        });
+      });
+    });
   });
 });

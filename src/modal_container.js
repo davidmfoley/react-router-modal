@@ -7,7 +7,8 @@ import type {
 
 import {
   setModalSetIdsHandler,
-  clearModalSetIdsHandler
+  clearModalSetIdsHandler,
+  setDefaultOutDelay
 } from './modal_controller';
 
 import ModalSetContainer from './modal_set_container';
@@ -104,10 +105,17 @@ export default class ModalContainer extends React.Component<Props, State> {
 
   componentDidMount() {
     setModalSetIdsHandler(this.onSetIds);
+    setDefaultOutDelay(this.props.outDelay || 0);
   }
 
   componentWillUnmount() {
     clearModalSetIdsHandler();
+  }
+
+  componentWillReceiveProps(next: Props) {
+    if (next.outDelay !== this.props.outDelay) {
+      setDefaultOutDelay(next.outDelay || 0);
+    }
   }
 
   onSetIds = (setIds: number[]) => {

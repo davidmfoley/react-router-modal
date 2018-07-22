@@ -6,6 +6,8 @@ global.requestAnimationFrame = window.requestAnimationFrame = fn => {
   setTimeout(fn, 0);
 };
 
+global.scroll = window.scroll = () => {};
+
 function copyProps(src, target) {
   const props = Object.getOwnPropertyNames(src)
     .filter(prop => typeof target[prop] === 'undefined')

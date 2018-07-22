@@ -28,11 +28,13 @@ export default class ModalWithBackdrop extends React.Component<Props, State> {
 
   componentDidMount() {
     requestAnimationFrame(() => {
-      if (!this.done) {
-        this.setState({
-          rendered: true
-        });
-      }
+      requestAnimationFrame(() => {
+        if (!this.done && !this.rendered) {
+          this.setState({
+            rendered: true
+          });
+        }
+      });
     });
   }
 
@@ -42,8 +44,8 @@ export default class ModalWithBackdrop extends React.Component<Props, State> {
 
   getClassName(mainClassName?: string, inClassName?: string, outClassName?: string) {
     const names: string[] = [mainClassName || ''];
-    if (this.state.rendered) names.push(inClassName || '');
-    if (this.props.hiding) names.push(outClassName || '');
+    if (this.state.rendered && !this.props.isOut) names.push(inClassName || '');
+    if (this.props.isOut) names.push(outClassName || '');
     return names.filter(n => !!n).join(' ') || '';
   }
 
