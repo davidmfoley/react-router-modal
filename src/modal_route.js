@@ -16,6 +16,11 @@ type Props = {
   props?: Object,
   className?: string,
   parentPath?: string | (match: Match) => string,
+  backdropInClassName?: string,
+  backdropOutClassName?: string,
+  inClassName?: string,
+  outClassName?: string,
+  outDelay?: number,
 }
 
 
@@ -26,11 +31,6 @@ function getStackOrder(match) {
 
 /**
 * A react-router Route that shows a modal when the location pathname matches.
-*
-* The component rendered in the modal will receive the following props:
-*
-* @param {string} parentPath - Either the parentPath specified in the ModalRoute, or a calculated value based on matched url
-* @param {string} closeModal A convenience method to close the modal by navigating to the parentPath
 *
 * @param {Object} props
 * @param {String} props.path path to match
@@ -45,12 +45,40 @@ function getStackOrder(match) {
 *
 * @param {Object} props.props Props to be passed to the react component specified by the component property.
 *
+* 
+* Properties that support CSS Transitions:
+* 
+* @param {String} [props.inClassName=react-router-modal__modal--in] class name applied to modal immediately after it is shown to allow for css transitions
+* @param {String} [props.outClassName=react-router-modal__modal--out] class name applied to modal before modal is hidden to allow for css transitions
+* @param {String} [props.backdropInClassName=react-router-modal__backdrop--in] class name applied to backdrop immediately after it is shown to allow for css transitions
+* @param {String} [props.backdropOutClassName=react-router-modal__backdrop--out] class name applied to backdrop before modal is hidden to allow for css transitions
+* @param {String} [props.outDelay=0] delay, in milliseconds to wait when closing modal, to allow for css transitions to complete before ripping it out of the DOM
 *
 * When the route matches, the modal is shown.
 * If multiple routes match, the modals will be stacked based on the length of the path that is matched.
 *
+* The component rendered in the modal will receive the following props:
+*
+* @param {string} parentPath - Either the parentPath specified in the ModalRoute, or a calculated value based on matched url
+* @param {string} closeModal A convenience method to close the modal by navigating to the parentPath
 */
-function ModalRoute({ path, parentPath, className, children, component, exact, props, onBackdropClick }: Props): any {
+function ModalRoute(routeProps: Props): any {
+  const {
+    path,
+    parentPath,
+    exact,
+    props,
+    onBackdropClick
+  } = routeProps;
+
+  const modalProps = { ...routeProps };
+
+  delete modalProps.exact;
+  delete modalProps.path;
+  delete modalProps.parentPath;
+  delete modalProps.onBackdropClick;
+  delete modalProps.props;
+
   const getParentPath = (match: Match): string => {
     if (typeof(parentPath) === 'function') {
       return parentPath(match);
@@ -64,8 +92,7 @@ function ModalRoute({ path, parentPath, className, children, component, exact, p
   return (
     <Route path={path} exact={exact} render={({match, location, history}) => (
       <Modal
-        component={component}
-        children={children}
+        {...modalProps}
         props={{
           ...props,
           match,
@@ -74,7 +101,6 @@ function ModalRoute({ path, parentPath, className, children, component, exact, p
           parentPath: getParentPath(match),
           closeModal: () => history.push(getParentPath(match))
         }}
-        className={className}
         stackOrder={getStackOrder(match)}
         onBackdropClick={onBackdropClick || (() => history.push(getParentPath(match)))}
       />
