@@ -50,9 +50,6 @@ type State = {
  * @param {Function} [props.onFirstModalMounted] handler invoked when first modal is shown
  * @param {Function} [props.onLastModalUnmounted] handler invoked when last modal is hidden
  * @param {boolean} [props.autoRestoreScrollPosition=true] Automatically restore the window scroll position when the last modal is unmounted. This is useful in cases where you have made the body position fixed on small screen widths, usually to work around mobaile browser scrolling behavior. Set this to false if you do not want this behavior.
- * 
- * Properties that support CSS Transitions:
- * 
  * @param {String} [props.modalInClassName=react-router-modal__modal--in] class name applied to modal immediately after it is shown to allow for css transitions
  * @param {String} [props.modalOutClassName=react-router-modal__modal--out] class name applied to modal before modal is hidden to allow for css transitions
  * @param {String} [props.backdropInClassName=react-router-modal__backdrop--in] class name applied to backdrop immediately after it is shown to allow for css transitions

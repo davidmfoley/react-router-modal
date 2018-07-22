@@ -45,10 +45,7 @@ function getStackOrder(match) {
 * @param {ReactComponent} props.component modal content can be specified as a component type. The component will be passed `parentPath` and `closeModal` props, in addition to the specified props, and the withRouter props.
 *
 * @param {Object} props.props Props to be passed to the react component specified by the component property.
-*
-* 
-* Properties that support CSS Transitions:
-* 
+
 * @param {String} [props.inClassName=react-router-modal__modal--in] class name applied to modal immediately after it is shown to allow for css transitions
 * @param {String} [props.outClassName=react-router-modal__modal--out] class name applied to modal before modal is hidden to allow for css transitions
 * @param {String} [props.backdropClassName=react-router-modal__backdrop] class name applied to backdrop
