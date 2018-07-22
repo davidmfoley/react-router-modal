@@ -137,7 +137,12 @@ When no modals are shown, nothing is rendered into the DOM.
     -   `props.bodyModalClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to the <body /> when any modals are shown (optional, default `react-router-modal__modal-open`)
     -   `props.onFirstModalMounted` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** handler invoked when first modal is shown
     -   `props.onLastModalUnmounted` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** handler invoked when last modal is hidden
-    -   `props.autoRestoreScrollPosition` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Automatically restore the window scroll position when the last modal is unmounted. This is useful in cases where you have made the body position fixed on small screen widths, usually to work around mobaile browser scrolling behavior. Set this to false if you do not want this behavior. (optional, default `true`)
+    -   `props.autoRestoreScrollPosition` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Automatically restore the window scroll position when the last modal is unmounted. This is useful in cases where you have made the body position fixed on small screen widths, usually to work around mobaile browser scrolling behavior. Set this to false if you do not want this behavior.Properties that support CSS Transitions: (optional, default `true`)
+    -   `props.modalInClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to modal immediately after it is shown to allow for css transitions (optional, default `react-router-modal__modal--in`)
+    -   `props.modalOutClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to modal before modal is hidden to allow for css transitions (optional, default `react-router-modal__modal--out`)
+    -   `props.backdropInClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to backdrop immediately after it is shown to allow for css transitions (optional, default `react-router-modal__backdrop--in`)
+    -   `props.backdropOutClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to backdrop before modal is hidden to allow for css transitions (optional, default `react-router-modal__backdrop--out`)
+    -   `props.outDelay` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** delay, in milliseconds to wait when closing modal, to allow for css transitions to complete before ripping it out of the DOM (optional, default `0`)
 
 **Examples**
 
@@ -182,13 +187,9 @@ _DOM structure_
 
 A react-router Route that shows a modal when the location pathname matches.
 
-The component rendered in the modal will receive the following props:
-
 **Parameters**
 
--   `_ref`  
--   `parentPath` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Either the parentPath specified in the ModalRoute, or a calculated value based on matched url
--   `closeModal` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A convenience method to close the modal by navigating to the parentPath
+-   `routeProps`  
 -   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
     -   `props.path` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** path to match
     -   `props.exact` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set, only show modal if route exactly matches path.
@@ -197,8 +198,15 @@ The component rendered in the modal will receive the following props:
     -   `props.className` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to modal container
     -   `props.children` **Children** modal content can be specified as chld elements
     -   `props.component` **ReactComponent** modal content can be specified as a component type. The component will be passed `parentPath` and `closeModal` props, in addition to the specified props, and the withRouter props.
-    -   `props.props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Props to be passed to the react component specified by the component property.When the route matches, the modal is shown.
-        If multiple routes match, the modals will be stacked based on the length of the path that is matched.
+    -   `props.props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Props to be passed to the react component specified by the component property.Properties that support CSS Transitions:
+    -   `props.inClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to modal immediately after it is shown to allow for css transitions (optional, default `react-router-modal__modal--in`)
+    -   `props.outClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to modal before modal is hidden to allow for css transitions (optional, default `react-router-modal__modal--out`)
+    -   `props.backdropInClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to backdrop immediately after it is shown to allow for css transitions (optional, default `react-router-modal__backdrop--in`)
+    -   `props.backdropOutClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to backdrop before modal is hidden to allow for css transitions (optional, default `react-router-modal__backdrop--out`)
+    -   `props.outDelay` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** delay, in milliseconds to wait when closing modal, to allow for css transitions to complete before ripping it out of the DOMWhen the route matches, the modal is shown.
+        If multiple routes match, the modals will be stacked based on the length of the path that is matched.The component rendered in the modal will receive the following props: (optional, default `0`)
+-   `parentPath` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Either the parentPath specified in the ModalRoute, or a calculated value based on matched url
+-   `closeModal` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A convenience method to close the modal by navigating to the parentPath
 
 ## Modal
 
@@ -212,11 +220,16 @@ child elements of the Modal.
 
 -   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
     -   `props.stackOrder` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** order to stack modals, higher number means "on top"
-    -   `props.className` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to modal container
     -   `props.children` **Children** Modal content can be specified as chld elements
     -   `props.component` **Component** React component to render in the modal.
     -   `props.props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** props to pass to the react component specified by the component property
-    -   `props.onBackdropClick` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** handler to be invoked when the modal backdrop is clicked
+    -   `props.onBackdropClick` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** handler to be invoked when the modal backdrop is clickedThe following properties are inherited from ModalContainer but can be overridden per Modal
+    -   `props.className` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to modal containerProperties that support CSS Transitions:
+    -   `props.inClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to modal immediately after it is shown to allow for css transitions
+    -   `props.outClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to modal before modal is hidden to allow for css transitions
+    -   `props.backdropInClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to backdrop immediately after it is shown to allow for css transitions
+    -   `props.backdropOutClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to backdrop before modal is hidden to allow for css transitions
+    -   `props.outDelay` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** delay, in milliseconds to wait when closing modal, to allow for css transitions to complete before ripping it out of the DOM
 
 **Examples**
 
