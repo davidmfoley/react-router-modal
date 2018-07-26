@@ -2,6 +2,7 @@
 import React from 'react';  // eslint-disable-line no-unused-vars
 import { Route, withRouter } from 'react-router-dom';
 import Modal from './modal';
+import pathToRegexp from 'path-to-regexp';
 
 type Match  = { url: string, params: any }
 
@@ -82,7 +83,7 @@ function ModalRoute(routeProps: Props): any {
     if (typeof(parentPath) === 'function') {
       return parentPath(match);
     }
-    if (parentPath) return parentPath;
+    if (parentPath) return pathToRegexp(parentPath, match.params);
     if (match.params[0]) return match.params[0];
     if (match.params[0] === '') return '/';
     return match.url;
