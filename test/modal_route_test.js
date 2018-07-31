@@ -34,7 +34,7 @@ describe('ModalRoute', () => {
     return (
       <div>
         <ModalContainer backdropClassName='test-backdrop'/>
-        <ModalRoute component={FooModal} path='*/foo' className='test-modal test-modal-foo'/>
+        <ModalRoute component={FooModal} path='*/foo' className='test-modal test-modal-foo' />
         <ModalRoute component={BarModal} path='*/bar' className='test-modal test-modal-bar'/>
       </div>
     );
@@ -70,6 +70,37 @@ describe('ModalRoute', () => {
     });
 
     it('renders the modal', () => {
+      expect(wrapper.find('.test-modal-foo').length).to.eq(1);
+    });
+
+  });
+
+  describe('passing down props', () => {
+    const PropsTestWrapper = props => (
+      <MemoryRouter initialEntries={['/foo']}>
+        <div>
+          <ModalRoute component={FooModal} path='*/foo' className='test-modal test-modal-foo' props={props} />
+          <ModalContainer backdropClassName='test-backdrop' />
+        </div>
+      </MemoryRouter>
+    );
+
+    beforeEach(() => {
+      wrapper = mount(
+        <PropsTestWrapper foo='bar' />
+      );
+    });
+
+    it('passes down props.props', () => {
+      const foo = wrapper.find(FooModal);
+      expect(foo.props().foo).to.eq('bar');
+      expect(wrapper.find('.test-modal-foo').length).to.eq(1);
+    });
+
+    it('passes down changes to props.props', () => {
+      wrapper.setProps({ foo: 'baz' })
+      const foo = wrapper.find(FooModal);
+      expect(foo.props().foo).to.eq('baz');
       expect(wrapper.find('.test-modal-foo').length).to.eq(1);
     });
   });
