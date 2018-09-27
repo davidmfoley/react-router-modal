@@ -9,6 +9,13 @@
   z-index: 1000
 }
 
+/* wrapper that contains backdrop and modal */
+/* setting this to absolute and setting a z-index creates a new stacking context */
+.react-router-modal__wrapper {
+  position: absolute;
+  z-index: 1;
+}
+
 /* backdrop shown behind each modal */
 .react-router-modal__backdrop {
   position: fixed;
@@ -20,7 +27,8 @@
   background-color: rgba(0,0,0,0.5)
 }
 
-/* wrapper element for the modal component */
+
+/* modal element for the modal component */
 .react-router-modal__modal {
   position: fixed;
   top: 50%;
