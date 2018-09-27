@@ -19,7 +19,7 @@ describe('rendering modals', () => {
         { showModal && <Modal className='test-modal' component={TestModalContent} props={modalProps || {}}>
           What
         </Modal> }
-        <ModalContainer backdropClassName='test-backdrop-class-name' />
+        <ModalContainer backdropClassName='test-backdrop-class-name' wrapperClassName='test-wrapper-class-name'/>
       </div>
     );
   }
@@ -44,6 +44,12 @@ describe('rendering modals', () => {
       const backdrop = wrapper.find('.test-backdrop-class-name');
 
       expect(backdrop.length).to.eq(1);
+    });
+
+    it('renders the correct wrapper class name', () => {
+      const wrapperDiv = wrapper.find('.test-wrapper-class-name');
+
+      expect(wrapperDiv.length).to.eq(1);
     });
 
     it('renders modal content', () => {

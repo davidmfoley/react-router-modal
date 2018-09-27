@@ -21,6 +21,7 @@ type Props = {
   modalClassName?: string,
   modalInClassName?: string,
   modalOutClassName?: string,
+  wrapperClassName?: string,
   outDelay?: number,
   bodyModalOpenClassName?: string,
   onLastModalUnmounted?: Function,
@@ -54,6 +55,7 @@ type State = {
  * @param {String} [props.modalOutClassName=react-router-modal__modal--out] class name applied to modal before modal is hidden to allow for css transitions
  * @param {String} [props.backdropInClassName=react-router-modal__backdrop--in] class name applied to backdrop immediately after it is shown to allow for css transitions
  * @param {String} [props.backdropOutClassName=react-router-modal__backdrop--out] class name applied to backdrop before modal is hidden to allow for css transitions
+ * @param {String} [props.modalWrapperClassName=react-router-modal__wrapper] class name applied to backdrop before modal is hidden to allow for css transitions
  * @param {String} [props.outDelay=0] delay, in milliseconds to wait when closing modal, to allow for css transitions to complete before ripping it out of the DOM
  *
  * @example <caption>Using default class names</caption>
@@ -105,6 +107,7 @@ export default class ModalContainer extends React.Component<Props, State> {
     backdropInClassName: 'react-router-modal__backdrop--in',
     backdropOutClassName: 'react-router-modal__backdrop--out',
     containerClassName: 'react-router-modal__container',
+    wrapperClassName: 'react-router-modal__wrapper',
     bodyModalOpenClassName: 'react-router-modal__modal-open'
   }
 
@@ -168,6 +171,7 @@ export default class ModalContainer extends React.Component<Props, State> {
       modalClassName,
       modalInClassName,
       modalOutClassName,
+      wrapperClassName,
       outDelay
     } = this.props;
 
@@ -196,6 +200,7 @@ export default class ModalContainer extends React.Component<Props, State> {
         {setIds.map(id => <ModalSetContainer key={id}
           setId={id}
           outDelay={outDelay}
+          wrapperClassName={wrapperClassName}
           backdropClassName={backdropClassName}
           backdropInClassName={backdropInClassName}
           backdropOutClassName={backdropOutClassName}

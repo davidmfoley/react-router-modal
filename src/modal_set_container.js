@@ -18,6 +18,7 @@ type Props = {
   backdropClassName?: string,
   backdropInClassName?: string,
   backdropOutClassName?: string,
+  wrapperClassName?: string,
   modalClassName?: string,
   modalInClassName?: string,
   modalOutClassName?: string,
@@ -56,6 +57,7 @@ export default class ModalSetContainer extends React.Component<Props, State> {
       modalClassName,
       modalInClassName,
       modalOutClassName,
+      wrapperClassName,
     } = this.props;
 
     const { modals } = this.state;
@@ -78,6 +80,7 @@ export default class ModalSetContainer extends React.Component<Props, State> {
           modalInClassName={m.info.inClassName || modalInClassName}
           modalOutClassName={m.info.outClassName || modalOutClassName}
           onBackdropClick={m.info.onBackdropClick}
+          wrapperClassName={wrapperClassName}
           component={m.info.component}
           props={m.info.props || {}}
           isOut={!!m.info.out}

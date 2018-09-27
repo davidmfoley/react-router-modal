@@ -61,6 +61,7 @@ export default class ModalWithBackdrop extends React.Component<Props, State> {
       modalClassName,
       modalInClassName,
       modalOutClassName,
+      wrapperClassName,
     } = this.props;
 
     const calculatedBackdropClassName = this.getClassName(backdropClassName, backdropInClassName, backdropOutClassName);
@@ -69,7 +70,7 @@ export default class ModalWithBackdrop extends React.Component<Props, State> {
     const Component = component;
 
     return (
-      <div>
+      <div className={wrapperClassName}>
         <div className={calculatedBackdropClassName} onClick={onBackdropClick} />
         <div className={calculatedModalClassName}>
           {!Component && children}
