@@ -1,6 +1,6 @@
 {
   "name": "react-router-modal",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "simple react router modal",
   "main": "lib/index.js",
   "repository": "http://github.com/davidmfoley/react-router-modal",
