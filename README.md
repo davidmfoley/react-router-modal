@@ -3,6 +3,7 @@
 ### Table of Contents
 
 -   [react-router-modal](#react-router-modal)
+-   [Accessibility](#accessibility)
 -   [Examples](#examples)
 -   [ModalContainer](#modalcontainer)
 -   [ModalRoute](#modalroute)
@@ -82,6 +83,30 @@ If you are seeing modal content but the component that you expect to see "behind
 2.  Did you use `exact` on the `<Route />` that contains the component that is meant to render "under" the modal?
 
 
+## Accessibility
+
+Modals are rendered with the following attributes:
+
+`aria-modal="true"`
+`role="dialog"`
+
+Additionally, you should use the following props to describe your modal content:
+
+-   [aria-labelled-by](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-labelledby_attribute)
+-   [aria-describedby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute)
+-   [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute)
+
+### role="dialog"
+
+The role of modals defaults to `dialog`. You can specify a different `role`, for example `alertdialog`:
+
+      <Modal role='alertdialog' aria-label='Important Notice!>
+        Something important here!
+      </Modal>`
+
+See: [W3 Modal Example](https://www.w3.org/TR/wai-aria-practices-1.1/examples/dialog-modal/dialog.html)
+
+
 ## Examples
 
 ### TL;DR Example
@@ -142,6 +167,7 @@ When no modals are shown, nothing is rendered into the DOM.
     -   `props.modalOutClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to modal before modal is hidden to allow for css transitions (optional, default `react-router-modal__modal--out`)
     -   `props.backdropInClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to backdrop immediately after it is shown to allow for css transitions (optional, default `react-router-modal__backdrop--in`)
     -   `props.backdropOutClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to backdrop before modal is hidden to allow for css transitions (optional, default `react-router-modal__backdrop--out`)
+    -   `props.modalWrapperClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name applied to backdrop before modal is hidden to allow for css transitions (optional, default `react-router-modal__wrapper`)
     -   `props.outDelay` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** delay, in milliseconds to wait when closing modal, to allow for css transitions to complete before ripping it out of the DOM (optional, default `0`)
 
 **Examples**
