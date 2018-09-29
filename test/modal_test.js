@@ -11,14 +11,20 @@ let expect = chai.expect;
 function TestModalContent(props: any) {
   return <div>{props.message || 'none'}</div>;
 }
-
 describe('rendering modals', () => {
   function Wrapper({showModal, modalProps}: any) {
     return (
       <div>
-        { showModal && <Modal className='test-modal' component={TestModalContent} props={modalProps || {}}>
-          What
-        </Modal> }
+        {showModal && (
+          <Modal
+            className='test-modal'
+            component={TestModalContent}
+            props={modalProps || {}}
+          >
+            <h3 id="modal-label">Exampel label</h3>
+            <p id="modal-description">Example description</p>
+          </Modal>
+        )}
         <ModalContainer backdropClassName='test-backdrop-class-name' wrapperClassName='test-wrapper-class-name'/>
       </div>
     );
@@ -53,9 +59,9 @@ describe('rendering modals', () => {
     });
 
     it('renders modal content', () => {
-      const backdrop = wrapper.find('.test-modal');
+      const modal = wrapper.find('.test-modal');
 
-      expect(backdrop.length).to.eq(1);
+      expect(modal.length).to.eq(1);
     });
 
     describe('that has props change', () => {

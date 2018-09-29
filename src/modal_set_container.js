@@ -6,6 +6,7 @@ import type {
 
 import React from 'react';
 import ModalWithBackdrop from './modal_with_backdrop';
+import getAriaProps from './get_aria_props';
 
 import {
   setModalSetHandler,
@@ -85,6 +86,7 @@ export default class ModalSetContainer extends React.Component<Props, State> {
           props={m.info.props || {}}
           isOut={!!m.info.out}
           context={{setId: m.id}}
+          {...getAriaProps(m.info)}
         />)}
       </div>
     );

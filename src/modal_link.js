@@ -2,6 +2,7 @@
 import React from 'react';  // eslint-disable-line no-unused-vars
 import { Link, withRouter } from 'react-router-dom';
 import ModalRoute from './modal_route';
+import getAriaProps from './get_aria_props';
 
 type Props = {
   match: {url: string},
@@ -59,6 +60,7 @@ function ModalLink(props: Props): any {
         component={component}
         className={modalClassName}
         parentPath={parentPath || match.url}
+        {...getAriaProps(props)}
       />
     </Link>
   );

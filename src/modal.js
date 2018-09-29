@@ -81,42 +81,18 @@ type Context = {
  *   />
  * </div>
  */
+
 export default class Modal extends React.Component<Props, State> {
   props: Props
   state: State = {}
   context: Context
 
   componentWillMount() {
-    const {
-      className,
-      inClassName,
-      outClassName,
-      backdropClassName,
-      backdropInClassName,
-      backdropOutClassName,
-      outDelay,
-      children,
-      component,
-      stackOrder,
-      props,
-      onBackdropClick,
-    } = this.props;
-
     this.setState({
       modalId: mountModal({
         setId: this.context.setId || 0,
-        component,
-        children,
-        props: props || {},
-        stackOrder,
-        onBackdropClick,
-        className,
-        inClassName,
-        outClassName,
-        backdropClassName,
-        backdropInClassName,
-        backdropOutClassName,
-        outDelay
+        props: this.props.props || {},
+        ...this.props
       })
     });
   }
@@ -126,35 +102,7 @@ export default class Modal extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps(next: Props) {
-    const {
-      className,
-      inClassName,
-      outClassName,
-      backdropClassName,
-      backdropInClassName,
-      backdropOutClassName,
-      outDelay,
-      children,
-      component,
-      stackOrder,
-      props,
-      onBackdropClick,
-    } = next;
-
-    updateModal(this.state.modalId, {
-      component,
-      children,
-      props: props || {},
-      stackOrder,
-      onBackdropClick,
-      inClassName,
-      outClassName,
-      backdropClassName,
-      backdropInClassName,
-      backdropOutClassName,
-      outDelay,
-      className
-    });
+    updateModal(this.state.modalId, next);
   }
 
   componentWillUnmount() {
