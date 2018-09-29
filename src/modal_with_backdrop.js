@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-
+import getAriaProps from './get_aria_props';
 import type {
   ModalDisplayInfo,
 } from './types';
@@ -69,10 +69,17 @@ export default class ModalWithBackdrop extends React.Component<Props, State> {
 
     const Component = component;
 
+    const ariaProps = getAriaProps(this.props);
+
     return (
       <div className={wrapperClassName}>
         <div className={calculatedBackdropClassName} onClick={onBackdropClick} />
-        <div className={calculatedModalClassName}>
+        <div
+         className={calculatedModalClassName}
+         role='dialog'
+         aria-modal={true}
+         {...ariaProps}
+        >
           {!Component && children}
           {Component && <Component {...props} context={this.props.context}/>}
         </div>
