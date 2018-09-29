@@ -43,7 +43,7 @@ describe('ModalLink', () => {
         <MemoryRouter initialEntries = {['/foo']}>
           <div>
             <ModalContainer backdropClassName='test-backdrop'/>
-            <ModalLink component={FooModal} path='/foo' modalClassName='test-modal test-modal-foo' linkClassName='test-link-foo'/>
+            <ModalLink component={FooModal} path='/foo' modalClassName='test-modal test-modal-foo' linkClassName='test-link-foo' aria-label='Aria Label'/>
           </div>
         </MemoryRouter>
       );
@@ -52,6 +52,7 @@ describe('ModalLink', () => {
 
     it('renders the modal', () => {
       expect(wrapper.find('.test-modal-foo').length).to.eq(1);
+      expect(wrapper.find('.test-modal-foo').props()['aria-label']).to.eq('Aria Label');
     });
   });
 });
