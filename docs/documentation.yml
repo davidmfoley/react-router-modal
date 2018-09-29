@@ -1,6 +1,8 @@
 toc:
   - name: react-router-modal
     file: preamble.md
+  - name: Accessibility
+    file: accessibility.md
   - name: Examples
     file: examples.md
   - ModalContainer
