@@ -53,5 +53,8 @@
     "react-test-renderer": "^15.5.4",
     "rimraf": "^2.6.1",
     "watch": "^1.0.2"
+  },
+  "dependencies": {
+    "path-to-regexp": "^2.2.1"
   }
 }
