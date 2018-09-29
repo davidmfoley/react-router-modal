@@ -272,4 +272,26 @@ describe('ModalRoute', () => {
       expect(modalWrappers.get(3).className).to.eq('test-modal test-modal-baz-2');
     });
   });
+
+  describe('overriding aria props in ModalRoute', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <MemoryRouter initialEntries={['/bar/foo']}>
+          <div>
+            <ModalRoute role='alertdialog' path='/bar/foo' className='test-role-modal' aria-label='Yo Label'>
+              <div>Yo</div>
+            </ModalRoute>
+            <ModalContainer />
+          </div>
+        </MemoryRouter>
+      );
+    });
+
+    it('sets the role', () => {
+      const modalDiv = wrapper.find('.test-role-modal');
+      expect(modalDiv.length).to.eq(1);
+      expect(modalDiv.props().role).to.eq('alertdialog');
+      expect(modalDiv.props()['aria-label']).to.eq('Yo Label');
+    });
+  });
 });
