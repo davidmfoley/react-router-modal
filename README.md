@@ -109,7 +109,7 @@ You should use the following props to describe your modal content:
 -   [aria-describedby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute)
 -   [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute)
 
-Any props set on `<Modal />`, `<ModalRoute />`, or `<ModalLink />` that start with 'aria-' will be rendered on the modal element.
+Any props set on `<Modal />`, `<ModalRoute />`, or `<ModalLink />` that start with `aria-` will be rendered on the modal element.
 
 For example:
 
