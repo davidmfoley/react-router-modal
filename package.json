@@ -21,8 +21,8 @@
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
-    "react": "^15 || ^16",
-    "react-dom": "^15 || ^16",
+    "react": "^16",
+    "react-dom": "^16",
     "react-router-dom": "^4"
   },
   "devDependencies": {
@@ -36,10 +36,11 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.24.1",
-    "chai": "^4.0.1",
+    "chai": "^4.2.0",
     "chai-enzyme": "^0.7.1",
     "documentation": "4.0.0-rc.1",
-    "enzyme": "^2.8.2",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
     "eslint": "^3.19.0",
     "eslint-plugin-flowtype": "^2.34.0",
     "eslint-plugin-react": "^7.0.1",
@@ -47,10 +48,9 @@
     "flow-copy-source": "^1.1.0",
     "jsdom": "^11.0.0",
     "mocha": "^3.4.2",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
+    "react": "16.x",
+    "react-dom": "16.x",
     "react-router-dom": "^4.1.1",
-    "react-test-renderer": "^15.5.4",
     "rimraf": "^2.6.1",
     "watch": "^1.0.2"
   }

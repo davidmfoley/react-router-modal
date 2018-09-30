@@ -1,6 +1,10 @@
 const { JSDOM } = require('jsdom');
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
 const { window } = jsdom;
+var enzyme = require('enzyme');
+var Adapter = require('enzyme-adapter-react-16');
+
+enzyme.configure({ adapter: new Adapter() });
 
 global.requestAnimationFrame = window.requestAnimationFrame = fn => {
   setTimeout(fn, 0);
@@ -25,6 +29,6 @@ copyProps(window, global);
 // needs to be after the setup of globals
 // otherwise react decides the env doesn't support rendering
 const chai = require('chai');
-const chaiEnzyme = require('chai-enzyme');
+//const chaiEnzyme = require('chai-enzyme');
 
-chai.use(chaiEnzyme);
+//chai.use(chaiEnzyme);
