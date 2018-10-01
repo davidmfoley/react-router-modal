@@ -2170,10 +2170,10 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flow-bin@^0.57.3:
-  version "0.57.3"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.57.3.tgz#843fb80a821b6d0c5847f7bb3f42365ffe53b27b"
-  integrity sha512-bbB7KLR1bLS0CvHSsKseOGFF6iI2N9ocL14EQv8Hng28ZksD0gNRzR2JopqA3WGrQYJukDU1W4ZuKoBaRuElFA==
+flow-bin@^0.82.0:
+  version "0.82.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.82.0.tgz#fbec84c0d6cab7877565eca8214d655f3aefb8db"
+  integrity sha512-D7ViTCVJSVv19CB6dFWS9k2iKQlavtkRXn9el0ofVTTpGuybe+EPE8DZwdyohzEt6wRhHV8gwkteWvxdcVuOzg==
 
 flow-copy-source@^1.1.0:
   version "1.1.0"
@@ -4177,14 +4177,6 @@ react-router@^4.1.1:
     path-to-regexp "^1.5.3"
     prop-types "^15.5.4"
     warning "^3.0.0"
-
-react-test-renderer@^15.5.4:
-  version "15.5.4"
-  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-15.5.4.tgz#d4ebb23f613d685ea8f5390109c2d20fbf7c83bc"
-  integrity sha1-1OuyP2E9aF6o9TkBCcLSD798g7w=
-  dependencies:
-    fbjs "^0.8.9"
-    object-assign "^4.1.0"
 
 react-test-renderer@^16.0.0-0:
   version "16.5.2"
