@@ -34,7 +34,7 @@ TBH, if you are looking at this package you probably already have these, but you
 
 `react-router-dom` _version 4_
 
-`react` & `react-dom`, version 15 or higher
+`react` & `react-dom`, version *16* or higher
 
 For ex: `yarn add react-router-dom react react-dom`.
 
