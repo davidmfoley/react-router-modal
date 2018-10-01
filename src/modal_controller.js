@@ -77,6 +77,7 @@ export function mountModal(info: ModalDisplayInfo): ModalIdentifier {
   return id;
 }
 
+
 export function updateModal(id: ModalIdentifier, info: ModalDisplayInfo): void {
   const setIds = getSetIds();
   let foundSetId: ModalIdentifier;
@@ -117,6 +118,12 @@ function findModalById(id: ModalIdentifier): ?ModalDisplayInfo {
       if (modals[j].id === id) return modals[j].info;
     }
   }
+}
+
+export function containerCreated(id: ModalIdentifier, container: any) {
+  const modal = findModalById(id);
+  if (!modal) return;
+  modal.onPortalDestination(container);
 }
 
 export function unmountModal(id: ModalIdentifier) {

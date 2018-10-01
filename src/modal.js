@@ -1,7 +1,8 @@
 // @flow
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { mountModal, updateModal, unmountModal } from './modal_controller';
-import type { ModalIdentifier } from './types';
+import ModalSetContext from './modal_set_context';
 
 type Props = {
   component?: any,
@@ -19,11 +20,8 @@ type Props = {
 }
 
 type State = {
-  modalId?: string
-}
-
-type Context = {
-  setId: ModalIdentifier
+  modalId?: string,
+  portalDestination?: any
 }
 
 /**
@@ -81,36 +79,54 @@ type Context = {
  *   />
  * </div>
  */
+export default function Modal(props: Props) {
+  return <ModalSetContext.Consumer>
+    {({setId}) => (
+      <ModalLayout {...props} setId={setId} />
+    )}
+  </ModalSetContext.Consumer>;
+}
 
-export default class Modal extends React.Component<Props, State> {
-  props: Props
+class ModalLayout extends React.Component<Props & { setId: any }, State> {
+  props: Props & { setId: any }
   state: State = {}
-  context: Context
 
   componentWillMount() {
     this.setState({
       modalId: mountModal({
-        setId: this.context.setId || 0,
+        setId: this.props.setId || 0,
         props: this.props.props || {},
+        onPortalDestination: this.onPortalDestination,
         ...this.props
       })
     });
   }
 
-  static contextTypes = {
-    setId: () => { }
-  }
-
   componentWillReceiveProps(next: Props) {
-    updateModal(this.state.modalId, next);
+    updateModal(this.state.modalId, {...next, onPortalDestination: this.onPortalDestination});
   }
 
   componentWillUnmount() {
+    this.setState({portalDestination: null});
     unmountModal(this.state.modalId);
   }
 
+  onPortalDestination = (portalDestination) => {
+    this.setState({portalDestination});
+  }
+
   render() {
+    if (this.state.portalDestination) {
+      const Component = this.props.component;
+
+      return ReactDOM.createPortal(
+        ((Component ? (
+            <Component {...this.props.props}/> 
+        ): this.props.children): any),
+        this.state.portalDestination
+      );
+
+    }
     return null;
   }
 }
-

@@ -6,6 +6,7 @@ import type {
 
 import React from 'react';
 import ModalWithBackdrop from './modal_with_backdrop';
+import ModalSetContext from './modal_set_context';
 import getAriaProps from './get_aria_props';
 
 import {
@@ -69,25 +70,30 @@ export default class ModalSetContainer extends React.Component<Props, State> {
 
     return (
       <div className={containerClassName}>
-        {modals.map(m => <ModalWithBackdrop
-          key={m.id}
-          children={m.info.children}
-          backdropClassName={m.info.backdropClassName || backdropClassName}
-          outDelay={typeof m.info.outDelay === 'undefined' ? this.props.outDelay : m.info.outDelay}
-          backdropInClassName={m.info.backdropInClassName || backdropInClassName}
-          backdropOutClassName={m.info.backdropOutClassName || backdropOutClassName}
-          containerClassName={containerClassName}
-          modalClassName={m.info.className || modalClassName}
-          modalInClassName={m.info.inClassName || modalInClassName}
-          modalOutClassName={m.info.outClassName || modalOutClassName}
-          onBackdropClick={m.info.onBackdropClick}
-          wrapperClassName={wrapperClassName}
-          component={m.info.component}
-          props={m.info.props || {}}
-          isOut={!!m.info.out}
-          context={{setId: m.id}}
-          {...getAriaProps(m.info)}
-        />)}
+        {modals.map(m => (
+          <ModalSetContext.Provider value={{ setId: m.id }} key={m.id}>
+            <ModalWithBackdrop
+              key={m.id}
+              modalId={m.id}
+              children={m.info.children}
+              backdropClassName={m.info.backdropClassName || backdropClassName}
+              outDelay={typeof m.info.outDelay === 'undefined' ? this.props.outDelay : m.info.outDelay}
+              backdropInClassName={m.info.backdropInClassName || backdropInClassName}
+              backdropOutClassName={m.info.backdropOutClassName || backdropOutClassName}
+              containerClassName={containerClassName}
+              modalClassName={m.info.className || modalClassName}
+              modalInClassName={m.info.inClassName || modalInClassName}
+              modalOutClassName={m.info.outClassName || modalOutClassName}
+              onBackdropClick={m.info.onBackdropClick}
+              wrapperClassName={wrapperClassName}
+              component={m.info.component}
+              props={m.info.props || {}}
+              isOut={!!m.info.out}
+              context={{ setId: m.id }}
+              {...getAriaProps(m.info)}
+            />
+          </ModalSetContext.Provider>
+        ))}
       </div>
     );
   }

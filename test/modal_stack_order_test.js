@@ -12,7 +12,7 @@ function TestModalContent() {
   return <div></div>;
 }
 
-describe('handling startup event order', () => {
+describe('Modal stack order', () => {
   let wrapper: ReactWrapper;
 
   beforeEach(() => {
@@ -28,8 +28,8 @@ describe('handling startup event order', () => {
   afterEach(() => { wrapper.unmount(); });
 
   it('renders modals in order by mount time', () => {
-    const modalWrappers = wrapper.find('.test-modal');
-    expect(modalWrappers.get(0).className).to.eq('test-modal test-modal-foo');
-    expect(modalWrappers.get(1).className).to.eq('test-modal test-modal-bar');
+    const modalWrappers = wrapper.find('div.test-modal');
+    expect(modalWrappers.at(0).props().className).to.eq('test-modal test-modal-foo');
+    expect(modalWrappers.at(1).props().className).to.eq('test-modal test-modal-bar');
   });
 });

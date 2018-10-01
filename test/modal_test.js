@@ -11,7 +11,7 @@ let expect = chai.expect;
 function TestModalContent(props: any) {
   return <div>{props.message || 'none'}</div>;
 }
-describe('rendering modals', () => {
+describe('Modal', () => {
   function Wrapper({showModal, modalProps}: any) {
     return (
       <div>
@@ -33,7 +33,9 @@ describe('rendering modals', () => {
   let wrapper: ReactWrapper;
 
   beforeEach(() => { wrapper = mount(<Wrapper />); });
-  afterEach(() => { wrapper.unmount(); });
+  afterEach(() => {
+    wrapper.unmount();
+  });
 
   describe('with no modals', () => {
     it('renders no modals', () => {
@@ -44,6 +46,7 @@ describe('rendering modals', () => {
   describe('with a modal', () => {
     beforeEach(() => {
       wrapper.setProps({showModal: true});
+      wrapper.update();
     });
 
     it('renders a backdrop', () => {
@@ -59,7 +62,7 @@ describe('rendering modals', () => {
     });
 
     it('renders modal content', () => {
-      const modal = wrapper.find('.test-modal');
+      const modal = wrapper.find('div.test-modal');
 
       expect(modal.length).to.eq(1);
     });
@@ -67,11 +70,12 @@ describe('rendering modals', () => {
     describe('that has props change', () => {
       beforeEach(() => {
         wrapper.setProps({showModal: true, modalProps: {message: 'hello'}});
+        wrapper.update();
       });
 
       it('passes down changed props', () => {
-        const backdrop = wrapper.find('.test-modal div');
-        expect(backdrop.get(0).textContent).to.eq('hello');
+        const modal = wrapper.find('div.test-modal');
+        expect(modal.text()).to.eq('hello');
       });
 
     });
@@ -82,12 +86,14 @@ describe('rendering modals', () => {
       });
 
       it('removes backdrop', () => {
+        wrapper.update()
         const backdrop = wrapper.find('.test-backdrop-class-name');
 
         expect(backdrop.length).to.eq(0);
       });
 
       it('removes modal', () => {
+        wrapper.update()
         const backdrop = wrapper.find('.test-backdrop-class-name');
 
         expect(backdrop.length).to.eq(0);

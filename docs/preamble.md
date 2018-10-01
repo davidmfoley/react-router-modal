@@ -20,7 +20,9 @@ TBH, if you are looking at this package you probably already have these, but you
 
 `react-router-dom` *version 4*
 
-`react` & `react-dom`, version 15 or higher
+`react` & `react-dom`, version *16.3 or higher*.
+
+If you are using an older version of react, install a pre-2.0 version of react-router-modal.
 
 For ex: `yarn add react-router-dom react react-dom`.
 

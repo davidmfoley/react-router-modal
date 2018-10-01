@@ -1,11 +1,15 @@
 // @flow
 import React from 'react';
 import getAriaProps from './get_aria_props';
+import { containerCreated } from './modal_controller';
+
 import type {
   ModalDisplayInfo,
+  ModalIdentifier
 } from './types';
 
 type Props = ModalDisplayInfo & {
+  modalId: ModalIdentifier,
   context: { setId: any }
 }
 
@@ -29,7 +33,7 @@ export default class ModalWithBackdrop extends React.Component<Props, State> {
   componentDidMount() {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        if (!this.done && !this.rendered) {
+        if (!this.done && !this.state.rendered) {
           this.setState({
             rendered: true
           });
@@ -51,9 +55,6 @@ export default class ModalWithBackdrop extends React.Component<Props, State> {
 
   render() {
     const {
-      children,
-      component,
-      props,
       onBackdropClick,
       backdropClassName,
       backdropInClassName,
@@ -67,23 +68,59 @@ export default class ModalWithBackdrop extends React.Component<Props, State> {
     const calculatedBackdropClassName = this.getClassName(backdropClassName, backdropInClassName, backdropOutClassName);
     const calculatedModalClassName = this.getClassName(modalClassName, modalInClassName, modalOutClassName);
 
-    const Component = component;
-
     const ariaProps = getAriaProps(this.props);
 
     return (
       <div className={wrapperClassName}>
         <div className={calculatedBackdropClassName} onClick={onBackdropClick} />
-        <div
+        <ModalPortalDestination
          className={calculatedModalClassName}
-         role='dialog'
-         aria-modal={true}
-         {...ariaProps}
-        >
-          {!Component && children}
-          {Component && <Component {...props} context={this.props.context}/>}
-        </div>
+         ariaProps={ariaProps}
+         onRef={(ref) => containerCreated(this.props.modalId, ref)}
+        />
       </div>
+    );
+  }
+}
+
+type PortalProps = {
+  className: string,
+  ariaProps: Object,
+  onRef: Function,
+};
+type PortalState = { container?: any };
+
+class ModalPortalDestination extends React.Component<PortalProps, PortalState> {
+  props: PortalProps;
+  state = {}
+
+  onDiv = (container) => {
+    if (!this.state.container) {
+      this.setState({ container });
+      this.props.onRef(container);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.state.container) {
+      this.state.container.remove();
+    }
+  }
+
+  render() {
+    const {
+      className,
+      ariaProps,
+    } = this.props;
+
+    return (
+      <div
+        className={className}
+        role='dialog'
+        aria-modal={true}
+        {...ariaProps}
+        ref={this.onDiv}
+      />
     );
   }
 }

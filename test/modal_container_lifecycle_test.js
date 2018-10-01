@@ -19,7 +19,7 @@ describe('ModalContainer lifecycle', () => {
   let onFirstModalMounted = () => firstModalMountedCalls++;
   let onLastModalUnmounted = () => lastModalUnmountedCalls++
   let oldWindowScroll;
-  let scrolledTo: ?Object;
+  let scrolledTo: Object;
 
   function Wrapper({showModal}: any) {
     return (
@@ -30,14 +30,13 @@ describe('ModalContainer lifecycle', () => {
     );
   }
 
-
   beforeEach(() => {
     oldWindowScroll = window.scroll;
     window.scroll = (x, y) => {
-      scrolledTo = {x, y};
+      scrolledTo = {x: +x, y: +y};
     }
     window.requestAnimationFrame = fn => fn();
-    scrolledTo = null;
+    scrolledTo = {};
     firstModalMountedCalls = 0;
     lastModalUnmountedCalls = 0;
   });
@@ -71,7 +70,7 @@ describe('ModalContainer lifecycle', () => {
       });
 
       it('does not scroll', () => {
-        expect(scrolledTo).to.eq(null);
+        expect(scrolledTo.y).to.eq(undefined);
       });
 
       describe('and then unmounted', () => {
@@ -85,7 +84,8 @@ describe('ModalContainer lifecycle', () => {
         });
 
         it('scrolls to original position', () => {
-          expect(scrolledTo).to.eql({x:0, y:0});
+          expect(scrolledTo.x).to.eq(0);
+          expect(scrolledTo.y).to.eq(0);
         });
       });
     });

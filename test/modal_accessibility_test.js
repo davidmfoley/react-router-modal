@@ -28,12 +28,10 @@ describe('modal accessibility', () => {
       </Wrapper>
     );
 
-    const modal = content.find('.test-modal');
+    const modal = content.find('div.test-modal');
 
     expect(modal.props().role).to.eq('dialog');
     expect(modal.props()['aria-modal']).to.eq(true);
-
-    content.unmount();
   });
 
   it('supports basic aria props', () => {
@@ -41,8 +39,8 @@ describe('modal accessibility', () => {
       <Wrapper>
         <Modal
           className='test-modal'
-          aria-labelled-by="modal-label"
-          aria-described-by="modal-description"
+          aria-labelledby="modal-label"
+          aria-describedby="modal-description"
         >
           <h3 id="modal-label">Example label</h3>
           <p id="modal-description">Example description</p>
@@ -51,14 +49,12 @@ describe('modal accessibility', () => {
       </Wrapper>
     );
 
-    const modal = content.find('.test-modal');
+    const modal = content.find('div.test-modal');
 
     expect(modal.props().role).to.eq('dialog');
     expect(modal.props()['aria-modal']).to.eq(true);
-    expect(modal.props()['aria-labelled-by']).to.eq('modal-label');
-    expect(modal.props()['aria-described-by']).to.eq('modal-description');
-
-    content.unmount();
+    expect(modal.props()['aria-labelledby']).to.eq('modal-label');
+    expect(modal.props()['aria-describedby']).to.eq('modal-description');
   });
 
   it('can override role', () => {
@@ -76,14 +72,12 @@ describe('modal accessibility', () => {
       </Wrapper>
     );
 
-    const modal = content.find('.test-modal');
+    const modal = content.find('div.test-modal');
 
     expect(modal.props().role).to.eq('alertdialog');
     expect(modal.props()['aria-modal']).to.eq(true);
     expect(modal.props()['aria-labelled-by']).to.eq('modal-label');
     expect(modal.props()['aria-described-by']).to.eq('modal-description');
-
-    content.unmount();
   });
 
   function Wrapper({children}: any) {
