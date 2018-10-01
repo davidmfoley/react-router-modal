@@ -19,7 +19,7 @@ describe('ModalContainer lifecycle', () => {
   let onFirstModalMounted = () => firstModalMountedCalls++;
   let onLastModalUnmounted = () => lastModalUnmountedCalls++
   let oldWindowScroll;
-  let scrolledTo: ?Object;
+  let scrolledTo: Object;
 
   function Wrapper({showModal}: any) {
     return (
@@ -36,7 +36,7 @@ describe('ModalContainer lifecycle', () => {
       scrolledTo = {x: +x, y: +y};
     }
     window.requestAnimationFrame = fn => fn();
-    scrolledTo = null;
+    scrolledTo = {};
     firstModalMountedCalls = 0;
     lastModalUnmountedCalls = 0;
   });

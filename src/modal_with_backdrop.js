@@ -33,7 +33,7 @@ export default class ModalWithBackdrop extends React.Component<Props, State> {
   componentDidMount() {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        if (!this.done && !this.rendered) {
+        if (!this.done && !this.state.rendered) {
           this.setState({
             rendered: true
           });
@@ -73,7 +73,7 @@ export default class ModalWithBackdrop extends React.Component<Props, State> {
     return (
       <div className={wrapperClassName}>
         <div className={calculatedBackdropClassName} onClick={onBackdropClick} />
-        <ModalPortal
+        <ModalPortalDestination
          className={calculatedModalClassName}
          ariaProps={ariaProps}
          onRef={(ref) => containerCreated(this.props.modalId, ref)}
@@ -87,11 +87,10 @@ type PortalProps = {
   className: string,
   ariaProps: Object,
   onRef: Function,
-  children: any
 };
 type PortalState = { container?: any };
 
-class ModalPortal extends React.Component<PortalProps, PortalState> {
+class ModalPortalDestination extends React.Component<PortalProps, PortalState> {
   props: PortalProps;
   state = {}
 

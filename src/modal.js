@@ -20,7 +20,8 @@ type Props = {
 }
 
 type State = {
-  modalId?: string
+  modalId?: string,
+  portalDestination?: any
 }
 
 /**
@@ -119,9 +120,9 @@ class ModalLayout extends React.Component<Props & { setId: any }, State> {
       const Component = this.props.component;
 
       return ReactDOM.createPortal(
-        Component ? (
+        ((Component ? (
             <Component {...this.props.props}/> 
-        ): this.props.children,
+        ): this.props.children): any),
         this.state.portalDestination
       );
 
