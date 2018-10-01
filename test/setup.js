@@ -28,7 +28,7 @@ copyProps(window, global);
 
 // needs to be after the setup of globals
 // otherwise react decides the env doesn't support rendering
-const chai = require('chai');
+// const chai = require('chai');
 //const chaiEnzyme = require('chai-enzyme');
 
 //chai.use(chaiEnzyme);

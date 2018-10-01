@@ -30,11 +30,10 @@ describe('ModalContainer lifecycle', () => {
     );
   }
 
-
   beforeEach(() => {
     oldWindowScroll = window.scroll;
     window.scroll = (x, y) => {
-      scrolledTo = {x, y};
+      scrolledTo = {x: +x, y: +y};
     }
     window.requestAnimationFrame = fn => fn();
     scrolledTo = null;
@@ -85,7 +84,8 @@ describe('ModalContainer lifecycle', () => {
         });
 
         it('scrolls to original position', () => {
-          expect(scrolledTo).to.eql({x:0, y:0});
+          expect(scrolledTo.x).to.eq(0);
+          expect(scrolledTo.y).to.eq(0);
         });
       });
     });

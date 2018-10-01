@@ -31,8 +31,8 @@ describe('ModalLink', () => {
     });
 
     it('renders links', () => {
-      expect(wrapper.find('.test-link-foo').length).to.eq(1);
-      expect(wrapper.find('.test-link-foo').get(0).href).to.eq('/foo');
+      expect(wrapper.find('a.test-link-foo').length).to.eq(1);
+      expect(wrapper.find('.test-link-foo').at(0).props().to).to.eq('/foo');
     });
   });
 
@@ -51,8 +51,8 @@ describe('ModalLink', () => {
 
 
     it('renders the modal', () => {
-      expect(wrapper.find('.test-modal-foo').length).to.eq(1);
-      expect(wrapper.find('.test-modal-foo').props()['aria-label']).to.eq('Aria Label');
+      expect(wrapper.find('div.test-modal-foo').length).to.eq(1);
+      expect(wrapper.find('div.test-modal-foo').props()['aria-label']).to.eq('Aria Label');
     });
   });
 });

@@ -36,7 +36,7 @@ function OuterWithChildren({showInner}: any): any {
   );
 }
 
-describe('rendering nested modals', () => {
+describe('Modal in Modal', () => {
   describe('with outer component and inner children', () => {
     let wrapper: ReactWrapper;
 
@@ -57,6 +57,7 @@ describe('rendering nested modals', () => {
 
       try {
         wrapper.setProps({showInner: true});
+        wrapper.update();
       }
       catch(e) {
         // don't want to see the entire stack trace if this breaks
@@ -91,6 +92,7 @@ describe('rendering nested modals', () => {
       try {
         wrapper = mount(<WrapperWithComponents />);
         wrapper.setProps({showOuter: true, showInner: true});
+        wrapper.update();
       }
       catch(e) {
         // don't want to see the entire stack trace if this breaks

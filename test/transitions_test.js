@@ -38,6 +38,7 @@ describe('transitions', () => {
           />
         </div>
       );
+      container.update();
     });
 
     afterEach(done => {
@@ -48,7 +49,7 @@ describe('transitions', () => {
     });
 
     it('has the modal className but not the inClassName', () => {
-      expect(container.find('.modal').hasClass('modal-in')).to.eq(false);
+      expect(container.find('div.modal').hasClass('modal-in')).to.eq(false);
     });
 
     it('backdrop has the backdrop className but not the backdropInClassName', () => {
@@ -57,11 +58,14 @@ describe('transitions', () => {
 
     describe('after initial render', () => {
       beforeEach(done => {
-        setTimeout(done, 20);
+        setTimeout(() => {
+          container.update();
+          done();
+        }, 20);
       });
 
       it('gets the inClassName', () => {
-        expect(container.find('.modal').hasClass('modal-in')).to.eq(true);
+        expect(container.find('div.modal').hasClass('modal-in')).to.eq(true);
       });
 
       it('backdrop gets the backDropInClassName', () => {
@@ -73,10 +77,11 @@ describe('transitions', () => {
       beforeEach(() => {
         modal.unmount();
         modal = null;
+        container.update();
       });
 
       it('has the outClassName', () => {
-        expect(container.find('.modal').hasClass('modal-out')).to.eq(true);
+        expect(container.find('div.modal').hasClass('modal-out')).to.eq(true);
       });
 
       it('backdrop gets the backDropOutClassName', () => {
@@ -85,11 +90,14 @@ describe('transitions', () => {
 
       describe('after out delay', () => {
         beforeEach(done => {
-          setTimeout(done, 20);
+          setTimeout(() => {
+            container.update();
+            done();
+          }, 20);
 
         });
         it('is removed from dom', () => {
-          expect(container.find('.modal').length).to.eq(0);
+          expect(container.find('div.modal').length).to.eq(0);
         });
 
         it('backdrop is removed from dom', () => {

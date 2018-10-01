@@ -70,7 +70,7 @@ describe('ModalRoute', () => {
     });
 
     it('renders the modal', () => {
-      expect(wrapper.find('.test-modal-foo').length).to.eq(1);
+      expect(wrapper.find('div.test-modal-foo').length).to.eq(1);
     });
 
   });
@@ -94,14 +94,14 @@ describe('ModalRoute', () => {
     it('passes down props.props', () => {
       const foo = wrapper.find(FooModal);
       expect(foo.props().foo).to.eq('bar');
-      expect(wrapper.find('.test-modal-foo').length).to.eq(1);
+      expect(wrapper.find('div.test-modal-foo').length).to.eq(1);
     });
 
     it('passes down changes to props.props', () => {
       wrapper.setProps({ foo: 'baz' })
       const foo = wrapper.find(FooModal);
       expect(foo.props().foo).to.eq('baz');
-      expect(wrapper.find('.test-modal-foo').length).to.eq(1);
+      expect(wrapper.find('div.test-modal-foo').length).to.eq(1);
     });
   });
 
@@ -115,8 +115,8 @@ describe('ModalRoute', () => {
     });
 
     it('renders two modals', () => {
-      expect(wrapper.find('.test-modal-foo').length).to.eq(1);
-      expect(wrapper.find('.test-modal-bar').length).to.eq(1);
+      expect(wrapper.find('div.test-modal-foo').length).to.eq(1);
+      expect(wrapper.find('div.test-modal-bar').length).to.eq(1);
     });
 
     it('injects parentPath prop into rendered component', () => {
@@ -125,9 +125,10 @@ describe('ModalRoute', () => {
     });
 
     it('renders modals in order by matched path length', () => {
-      const modalWrappers = wrapper.find('.test-modal');
-      expect(modalWrappers.get(0).className).to.eq('test-modal test-modal-foo');
-      expect(modalWrappers.get(1).className).to.eq('test-modal test-modal-bar');
+      const modalWrappers = wrapper.find('div.test-modal');
+      
+      expect(modalWrappers.at(0).props().className).to.eq('test-modal test-modal-foo');
+      expect(modalWrappers.at(1).props().className).to.eq('test-modal test-modal-bar');
     });
   });
 
@@ -148,7 +149,7 @@ describe('ModalRoute', () => {
     });
 
     it('invokes the custom handler when backdrop is clicked', () => {
-      expect(wrapper.find('.test-string').length).to.eq(1);
+      expect(wrapper.find('div.test-string').length).to.eq(1);
 
       const backdrop = wrapper.find('.test-backdrop');
       backdrop.simulate('click');
@@ -175,12 +176,12 @@ describe('ModalRoute', () => {
       });
 
       it('navigates to parent path on backdrop click', () => {
-        expect(wrapper.find('.test-string').length).to.eq(1);
+        expect(wrapper.find('div.test-string').length).to.eq(1);
 
         const backdrop = wrapper.find('.test-backdrop');
         backdrop.simulate('click');
 
-        expect(wrapper.find('.test-string').length).to.eq(0);
+        expect(wrapper.find('div.test-string').length).to.eq(0);
       });
     });
 
@@ -201,12 +202,12 @@ describe('ModalRoute', () => {
       });
 
       it('navigates to parent path on backdrop click', () => {
-        expect(wrapper.find('.test-string').length).to.eq(1);
+        expect(wrapper.find('div.test-string').length).to.eq(1);
 
         const backdrop = wrapper.find('.test-backdrop');
         backdrop.simulate('click');
 
-        expect(wrapper.find('.test-string').length).to.eq(0);
+        expect(wrapper.find('div.test-string').length).to.eq(0);
       });
     });
   });
@@ -221,14 +222,14 @@ describe('ModalRoute', () => {
     });
 
     it('renders two modals', () => {
-      expect(wrapper.find('.test-modal-foo').length).to.eq(1);
-      expect(wrapper.find('.test-modal-bar').length).to.eq(1);
+      expect(wrapper.find('div.test-modal-foo').length).to.eq(1);
+      expect(wrapper.find('div.test-modal-bar').length).to.eq(1);
     });
 
     it('renders modals in order by matched path length', () => {
-      const modalWrappers = wrapper.find('.test-modal');
-      expect(modalWrappers.get(0).className).to.eq('test-modal test-modal-bar');
-      expect(modalWrappers.get(1).className).to.eq('test-modal test-modal-foo');
+      const modalWrappers = wrapper.find('div.test-modal');
+      expect(modalWrappers.at(0).props().className).to.eq('test-modal test-modal-bar');
+      expect(modalWrappers.at(1).props().className).to.eq('test-modal test-modal-foo');
     });
   });
 
@@ -246,8 +247,9 @@ describe('ModalRoute', () => {
     });
 
     it('passes along the route params', () => {
-      expect(wrapper.find('.test-modal').length).to.eq(1);
-      expect(wrapper.find('.test-modal p').get(0).textContent).to.eq('hello');
+      const modalDiv = wrapper.find('div.test-modal');
+      expect(modalDiv.length).to.eq(1);
+      expect(modalDiv.text()).to.eq('hello');
     });
   });
 
@@ -265,11 +267,11 @@ describe('ModalRoute', () => {
     });
 
     it('renders route modals first, then others', () => {
-      const modalWrappers = wrapper.find('.test-modal');
-      expect(modalWrappers.get(0).className).to.eq('test-modal test-modal-bar');
-      expect(modalWrappers.get(1).className).to.eq('test-modal test-modal-foo');
-      expect(modalWrappers.get(2).className).to.eq('test-modal test-modal-baz-1');
-      expect(modalWrappers.get(3).className).to.eq('test-modal test-modal-baz-2');
+      const modalWrappers = wrapper.find('div.test-modal');
+      expect(modalWrappers.at(0).props().className).to.eq('test-modal test-modal-bar');
+      expect(modalWrappers.at(1).props().className).to.eq('test-modal test-modal-foo');
+      expect(modalWrappers.at(2).props().className).to.eq('test-modal test-modal-baz-1');
+      expect(modalWrappers.at(3).props().className).to.eq('test-modal test-modal-baz-2');
     });
   });
 
@@ -288,7 +290,7 @@ describe('ModalRoute', () => {
     });
 
     it('sets the role', () => {
-      const modalDiv = wrapper.find('.test-role-modal');
+      const modalDiv = wrapper.find('div.test-role-modal');
       expect(modalDiv.length).to.eq(1);
       expect(modalDiv.props().role).to.eq('alertdialog');
       expect(modalDiv.props()['aria-label']).to.eq('Yo Label');
