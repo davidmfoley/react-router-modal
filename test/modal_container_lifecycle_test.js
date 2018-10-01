@@ -70,7 +70,7 @@ describe('ModalContainer lifecycle', () => {
       });
 
       it('does not scroll', () => {
-        expect(scrolledTo).to.eq(null);
+        expect(scrolledTo.y).to.eq(undefined);
       });
 
       describe('and then unmounted', () => {
