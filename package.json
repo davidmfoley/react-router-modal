@@ -21,8 +21,8 @@
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
-    "react": "^16",
-    "react-dom": "^16",
+    "react": "^16.3",
+    "react-dom": "^16.3",
     "react-router-dom": "^4"
   },
   "devDependencies": {
