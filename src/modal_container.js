@@ -8,6 +8,7 @@ import type {
 import {
   setModalSetIdsHandler,
   clearModalSetIdsHandler,
+  containerCreated,
   setDefaultOutDelay
 } from './modal_controller';
 
@@ -198,6 +199,7 @@ export default class ModalContainer extends React.Component<Props, State> {
     return (
       <div>
         {setIds.map(id => <ModalSetContainer key={id}
+          onRef={(ref) => containerCreated(id, ref)}
           setId={id}
           outDelay={outDelay}
           wrapperClassName={wrapperClassName}

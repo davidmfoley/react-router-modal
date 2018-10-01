@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { mountModal, updateModal, unmountModal } from './modal_controller';
 import type { ModalIdentifier } from './types';
 
@@ -92,6 +93,7 @@ export default class Modal extends React.Component<Props, State> {
       modalId: mountModal({
         setId: this.context.setId || 0,
         props: this.props.props || {},
+        onPortalDestination: this.onPortalDestination,
         ...this.props
       })
     });
@@ -102,15 +104,30 @@ export default class Modal extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps(next: Props) {
-    updateModal(this.state.modalId, next);
+    updateModal(this.state.modalId, {...next, onPortalDestination: this.onPortalDestination});
   }
 
   componentWillUnmount() {
+    this.setState({portalDestination: null});
     unmountModal(this.state.modalId);
   }
 
+  onPortalDestination = (portalDestination) => {
+    this.setState({portalDestination});
+  }
+
   render() {
+    if (this.state.portalDestination) {
+      const Component = this.props.component;
+
+      return ReactDOM.createPortal(
+        Component ? (
+            <Component {...this.props.props}/> 
+        ): this.props.children,
+        this.state.portalDestination
+      );
+
+    }
     return null;
   }
 }
-
