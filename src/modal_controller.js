@@ -153,7 +153,7 @@ function removeModal(id: ModalIdentifier) {
     }
     setIdsHandler(getSetIds());
     const handler = setHandlers[foundSetId];
-    if (handler) handler(modalSets[foundSetId]);
+    if (handler) handler(modalSets[foundSetId] || []);
   }
 }
 

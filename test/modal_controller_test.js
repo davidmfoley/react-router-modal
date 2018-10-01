@@ -128,7 +128,7 @@ describe('ModalController', () => {
           expect(modals[0].info.out).to.eq(true);
         }
         if (calls === 3) {
-          expect(modals).to.eq(undefined);
+          expect(modals).to.eql([]);
           done();
         }
       });
@@ -145,6 +145,7 @@ describe('ModalController', () => {
       });
 
       let calls = 0;
+
       setModalSetHandler(0, modals => {
         calls++;
         if (calls === 1) {
@@ -156,7 +157,7 @@ describe('ModalController', () => {
           expect(modals[0].info.out).to.eq(true);
         }
         if (calls === 3) {
-          expect(modals).to.eq(undefined);
+          expect(modals).to.eql([]);
           done();
         }
       });
