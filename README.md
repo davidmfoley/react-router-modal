@@ -18,25 +18,44 @@ Component docs: <https://github.com/davidmfoley/react-router-modal/blob/master/d
 
 Examples: <https://davidmfoley.github.io/react-router-modal-examples>
 
-### Installation
+# Which version of react-router-modal should I use?
 
-Install using yarn or npm.
+TL;DR: If you are using a version of react that is >= 16.3, you should use version 2.
 
-`npm install react-router-modal --save`
+-   react-router-modal version 1 works with react 15.0 and higher
+-   react-router-modal version 2 works _only_ with react 16.3 and higher
 
-or
+Version 2 uses react portals. This makes a few things nicer.
+
+The most notable difference is that context that is provided outside of modals works properly within modals.
+
+You can use `yarn info react version` or `npm info react version`, within your project directory, to find the version of react.
+
+Because portals are not available on many widely used versions of react, version 2 is currently pre-release.
+
+Install version 1:
 
 `yarn add react-router-modal`
 
-You will also need to install some other modules as peers.
+or
+
+`npm install --save react-router-modal`
+
+### Install version 2:
+
+`yarn add react-router-modal@next`
+
+or
+
+`npm install --save react-router-modal@next`
+
+### Other required modules
+
+You also need `react-router-dom`, version 4 or higher.
 
 TBH, if you are looking at this package you probably already have these, but you might want to check for version compatibility.
 
 `react-router-dom` _version 4_
-
-`react` & `react-dom`, version _16.3 or higher_.
-
-If you are using an older version of react, install a pre-2.0 version of react-router-modal.
 
 For ex: `yarn add react-router-dom react react-dom`.
 
