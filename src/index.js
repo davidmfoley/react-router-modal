@@ -1,3 +1,4 @@
+// @flow
 import Modal from './modal';
 import ModalContainer from './modal_container';
 import ModalLink from './modal_link';
