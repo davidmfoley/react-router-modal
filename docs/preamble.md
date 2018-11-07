@@ -4,18 +4,20 @@ Component docs: https://github.com/davidmfoley/react-router-modal/blob/master/do
 
 Examples: https://davidmfoley.github.io/react-router-modal-examples
 
-# Which version of react-router-modal should I use?
+## Installation
+
+#### Which version of react-router-modal should I use?
 
 TL;DR: If you are using a version of react that is >= 16.3, you should use version 2.
 
 - react-router-modal version 1 works with react 15.0 and higher
 - react-router-modal version 2 works *only* with react 16.3 and higher
 
-Version 2 uses react portals. This makes a few things nicer.
-
-The most notable difference is that context that is provided outside of modals works properly within modals.
-
 You can use `yarn info react version` or `npm info react version`, within your project directory, to find the version of react.
+
+
+Version 2 uses react portals. This makes a few things nicer. The most notable difference is that context that is provided outside of modals works properly within modals.
+
 
 Because portals are not available on many widely used versions of react, version 2 is currently pre-release.
 
