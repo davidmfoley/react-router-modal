@@ -59,7 +59,7 @@ When no modals are shown, nothing is rendered into the DOM.
     -   `props.modalClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to modals (optional, default `react-router-modal__modal`)
     -   `props.backdropClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to modal backdrops (optional, default `react-router-modal__backdrop`)
     -   `props.containerClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to the container itself (optional, default `react-router-modal__container`)
-    -   `props.bodyModalClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to the <body /> when any modals are shown (optional, default `react-router-modal__modal-open`)
+    -   `props.bodyModalOpenClassName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** class name to apply to the <body /> when any modals are shown (optional, default `react-router-modal__modal-open`)
 
 **Examples**
 
