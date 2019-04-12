@@ -13,6 +13,7 @@ type Props = {
   props?: any,
   modalClassName?: string,
   linkClassName?: string,
+  tabIndex?: string,
   parentPath?: string | (match: { url: string }) => string,
 }
 
@@ -45,13 +46,14 @@ function ModalLink(props: Props): any {
     children,
     component,
     linkClassName,
+    tabIndex,
     match,
     parentPath,
     modalClassName
   } = props;
 
   return (
-    <Link to={path} className={linkClassName}>
+    <Link to={path} className={linkClassName} tabIndex={tabIndex}>
       {children}
       <ModalRoute
         exact={exact}
