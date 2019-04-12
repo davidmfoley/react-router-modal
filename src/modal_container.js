@@ -48,7 +48,7 @@ type State = {
  * @param {String} [props.modalClassName=react-router-modal__modal] class name to apply to modals
  * @param {String} [props.backdropClassName=react-router-modal__backdrop] class name to apply to modal backdrops
  * @param {String} [props.containerClassName=react-router-modal__container] class name to apply to the container itself
- * @param {String} [props.bodyModalClassName=react-router-modal__modal-open] class name to apply to the <body /> when any modals are shown
+ * @param {String} [props.bodyModalOpenClassName=react-router-modal__modal-open] class name to apply to the <body /> when any modals are shown
  * @param {Function} [props.onFirstModalMounted] handler invoked when first modal is shown
  * @param {Function} [props.onLastModalUnmounted] handler invoked when last modal is hidden
  * @param {boolean} [props.autoRestoreScrollPosition=true] Automatically restore the window scroll position when the last modal is unmounted. This is useful in cases where you have made the body position fixed on small screen widths, usually to work around mobaile browser scrolling behavior. Set this to false if you do not want this behavior.
