@@ -74,9 +74,9 @@ export default class ModalWithBackdrop extends React.Component<Props, State> {
       <div className={wrapperClassName}>
         <div className={calculatedBackdropClassName} onClick={onBackdropClick} />
         <ModalPortalDestination
-         className={calculatedModalClassName}
-         ariaProps={ariaProps}
-         onRef={(ref) => containerCreated(this.props.modalId, ref)}
+          className={calculatedModalClassName}
+          ariaProps={ariaProps}
+          onRef={(ref) => containerCreated(this.props.modalId, ref)}
         />
       </div>
     );
@@ -102,8 +102,10 @@ class ModalPortalDestination extends React.Component<PortalProps, PortalState> {
   }
 
   componentWillUnmount() {
-    if (this.state.container) {
-      this.state.container.remove();
+    const { container } = this.state;
+    if (container && container.parentNode) {
+      // IE lacks element.remove() ...
+      container.parentNode.removeChild(container);
     }
   }
 
