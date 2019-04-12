@@ -1,10 +1,10 @@
 // @flow
 import type {
   ModalDisplayInfo,
-    ModalIdentifier,
-    MountedModal,
-    ModalSetHandler,
-    ModalSetsHandler,
+  ModalIdentifier,
+  MountedModal,
+  ModalSetHandler,
+  ModalSetsHandler,
 } from './types';
 
 let nextIdValue: ModalIdentifier = 1;
@@ -123,21 +123,30 @@ function findModalById(id: ModalIdentifier): ?ModalDisplayInfo {
 export function containerCreated(id: ModalIdentifier, container: any) {
   const modal = findModalById(id);
   if (!modal) return;
+  modal.container = container;
   modal.onPortalDestination(container);
 }
 
-export function unmountModal(id: ModalIdentifier) {
+export function unmountModal(id: ModalIdentifier): Promise<void> {
   const modal = findModalById(id);
-  if (!modal) return;
+
+  if (!modal) return Promise.resolve();
+  modal.frozenContent = modal.container.innerHTML;
 
   if (modal.outDelay) {
     const updated = {...modal, out: true};
 
     updateModal(id, updated);
-    return setTimeout(removeModal.bind(null, id), modal.outDelay);
+    return new Promise(resolve => {
+      setTimeout(() => {
+        removeModal(id)
+        resolve();
+      }, modal.outDelay);
+    });
   }
   else {
     removeModal(id);
+    return Promise.resolve();
   }
 }
 

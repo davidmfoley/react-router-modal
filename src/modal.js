@@ -107,8 +107,8 @@ class ModalLayout extends React.Component<Props & { setId: any }, State> {
   }
 
   componentWillUnmount() {
-    this.setState({portalDestination: null});
     unmountModal(this.state.modalId);
+    this.setState({ portalDestination: null });
   }
 
   onPortalDestination = (portalDestination) => {

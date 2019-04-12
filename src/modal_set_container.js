@@ -89,6 +89,7 @@ export default class ModalSetContainer extends React.Component<Props, State> {
               component={m.info.component}
               props={m.info.props || {}}
               isOut={!!m.info.out}
+              frozenContent={m.info.frozenContent}
               context={{ setId: m.id }}
               {...getAriaProps(m.info)}
             />

@@ -7,6 +7,8 @@ export type ModalDisplayInfo = {
   props: Object,
   stackOrder?: number,
   onBackdropClick?: Function,
+  container?: any,
+  frozenContent?: string,
   outDelay?: number
 }
 

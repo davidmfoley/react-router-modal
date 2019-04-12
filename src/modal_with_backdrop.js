@@ -53,6 +53,7 @@ export default class ModalWithBackdrop extends React.Component<Props, State> {
     return names.filter(n => !!n).join(' ') || '';
   }
 
+
   render() {
     const {
       onBackdropClick,
@@ -74,9 +75,11 @@ export default class ModalWithBackdrop extends React.Component<Props, State> {
       <div className={wrapperClassName}>
         <div className={calculatedBackdropClassName} onClick={onBackdropClick} />
         <ModalPortalDestination
+          isOut={!!this.props.isOut}
           className={calculatedModalClassName}
           ariaProps={ariaProps}
           onRef={(ref) => containerCreated(this.props.modalId, ref)}
+          frozenContent={this.props.frozenContent}
         />
       </div>
     );
@@ -87,7 +90,10 @@ type PortalProps = {
   className: string,
   ariaProps: Object,
   onRef: Function,
+  isOut: boolean,
+  frozenContent?: string
 };
+
 type PortalState = { container?: any };
 
 class ModalPortalDestination extends React.Component<PortalProps, PortalState> {
@@ -109,11 +115,24 @@ class ModalPortalDestination extends React.Component<PortalProps, PortalState> {
     }
   }
 
+
   render() {
     const {
       className,
       ariaProps,
     } = this.props;
+
+    if (this.props.frozenContent) {
+      return  (
+        <div
+          className={className}
+          role='dialog'
+          aria-modal={true}
+          {...ariaProps}
+          dangerouslySetInnerHTML={{ __html: this.props.frozenContent }}
+        />
+      )
+    }
 
     return (
       <div
