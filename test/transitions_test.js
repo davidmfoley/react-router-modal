@@ -3,13 +3,14 @@ import React from 'react';
 import { describe, it, afterEach, beforeEach } from 'mocha';
 import { mount, ReactWrapper } from 'enzyme';
 import ModalContainer from '../src/modal_container';
+import ModalWithBackdrop from '../src/modal_with_backdrop';
 import Modal from '../src/modal';
 import chai from 'chai';
 
 let expect = chai.expect;
 
 function TestModalContent() {
-  return <div></div>;
+  return <div className='content'></div>;
 }
 
 describe('transitions', () => {
@@ -71,6 +72,13 @@ describe('transitions', () => {
       it('backdrop gets the backDropInClassName', () => {
         expect(container.find('.backdrop').hasClass('backdrop-in')).to.eq(true);
       });
+
+      it('has the content', () => {
+        //container.update();
+        modal.update();
+        expect(container.find(ModalWithBackdrop).length).to.eq(1);
+        expect(container.find(ModalWithBackdrop).props().component).to.eq(TestModalContent);
+      });
     });
 
     describe('when a modal is unmounted', () => {
@@ -82,6 +90,12 @@ describe('transitions', () => {
 
       it('has the outClassName', () => {
         expect(container.find('div.modal').hasClass('modal-out')).to.eq(true);
+      });
+
+      it('has the frozen content', () => {
+        const { frozenContent } = container.find('ModalPortalDestination').props();
+        // cheesy
+        expect(frozenContent).to.contain('<div class="content"');
       });
 
       it('backdrop gets the backDropOutClassName', () => {
