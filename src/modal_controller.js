@@ -100,6 +100,38 @@ export function updateModal(id: ModalIdentifier, info: ModalDisplayInfo): void {
   }
 }
 
+export function containerCreated(id: ModalIdentifier, container: any) {
+  const modal = findModalById(id);
+  if (!modal) return;
+  modal.container = container;
+  modal.onPortalDestination(container);
+}
+
+export function unmountModal(id: ModalIdentifier): Promise<void> {
+  const modal = findModalById(id);
+
+  if (!modal) return Promise.resolve();
+
+  if (modal.outDelay) {
+    if (modal.container) {
+      modal.frozenContent = modal.container.innerHTML;
+    }
+    const updated = {...modal, out: true};
+
+    updateModal(id, updated);
+    return new Promise(resolve => {
+      setTimeout(() => {
+        removeModal(id)
+        resolve();
+      }, modal.outDelay);
+    });
+  }
+  else {
+    removeModal(id);
+    return Promise.resolve();
+  }
+}
+
 function getSetIds() {
   return Object.keys(modalSets).map(id => parseInt(id, 10));
 }
@@ -117,36 +149,6 @@ function findModalById(id: ModalIdentifier): ?ModalDisplayInfo {
     for(let j = 0; j < modals.length; j++) {
       if (modals[j].id === id) return modals[j].info;
     }
-  }
-}
-
-export function containerCreated(id: ModalIdentifier, container: any) {
-  const modal = findModalById(id);
-  if (!modal) return;
-  modal.container = container;
-  modal.onPortalDestination(container);
-}
-
-export function unmountModal(id: ModalIdentifier): Promise<void> {
-  const modal = findModalById(id);
-
-  if (!modal) return Promise.resolve();
-  modal.frozenContent = modal.container.innerHTML;
-
-  if (modal.outDelay) {
-    const updated = {...modal, out: true};
-
-    updateModal(id, updated);
-    return new Promise(resolve => {
-      setTimeout(() => {
-        removeModal(id)
-        resolve();
-      }, modal.outDelay);
-    });
-  }
-  else {
-    removeModal(id);
-    return Promise.resolve();
   }
 }
 

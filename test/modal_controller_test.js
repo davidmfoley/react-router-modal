@@ -7,7 +7,8 @@ import {
   setModalSetIdsHandler,
   setModalSetHandler,
   resetAll,
-  setDefaultOutDelay
+  setDefaultOutDelay,
+  containerCreated
 } from '../src/modal_controller';
 
 import { expect } from 'chai';
@@ -134,15 +135,26 @@ describe('ModalController', () => {
       });
 
       unmountModal(modalId);
-
     })
   });
+
   describe('unmounting a modal with outDelay', () => {
-    it('unmounts after a delay', done => {
-      const modalId = mountModal({
+    let modalId;
+    const innerHTML = 'foo';
+
+    beforeEach(() => {
+      setDefaultOutDelay(0);
+
+      modalId = mountModal({
+        onPortalDestination: () => {},
         outDelay: 10,
         setId: 0
       });
+
+      containerCreated(modalId, { innerHTML });
+    });
+
+    it('unmounts after a delay', done => {
 
       let calls = 0;
 
@@ -155,6 +167,7 @@ describe('ModalController', () => {
         if (calls === 2) {
           expect(modals.length).to.eq(1);
           expect(modals[0].info.out).to.eq(true);
+          expect(modals[0].info.frozenContent).to.eq(innerHTML);
         }
         if (calls === 3) {
           expect(modals).to.eql([]);
@@ -163,7 +176,13 @@ describe('ModalController', () => {
       });
 
       unmountModal(modalId);
+    })
 
+    it('resolves the promise after the delay', () => {
+      const promise = unmountModal(modalId);
+
+      expect(promise).to.be.an.instanceOf(Promise);
+      return promise;
     })
   });
 });
