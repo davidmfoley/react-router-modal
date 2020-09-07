@@ -53,8 +53,10 @@ function ModalLink(props: Props): any {
   } = props;
 
   return (
-    <Link to={path} className={linkClassName} tabIndex={tabIndex}>
-      {children}
+    <React.Fragment>
+      <Link to={path} className={linkClassName} tabIndex={tabIndex}>
+        {children}
+      </Link>
       <ModalRoute
         exact={exact}
         path={path}
@@ -64,7 +66,7 @@ function ModalLink(props: Props): any {
         parentPath={parentPath || match.url}
         {...getAriaProps(props)}
       />
-    </Link>
+    </React.Fragment>
   );
 }
 
