@@ -1,18 +1,16 @@
 // @flow
-import React from 'react';
+import React from "react";
 
-import type {
-  ModalIdentifier,
-} from './types';
+import type { ModalIdentifier } from "./types";
 
 import {
   setModalSetIdsHandler,
   clearModalSetIdsHandler,
   containerCreated,
-  setDefaultOutDelay
-} from './modal_controller';
+  setDefaultOutDelay,
+} from "./modal_controller";
 
-import ModalSetContainer from './modal_set_container';
+import ModalSetContainer from "./modal_set_container";
 
 type Props = {
   containerClassName?: string,
@@ -29,13 +27,13 @@ type Props = {
   onFirstModalMounted?: Function,
   autoRestoreScrollPosition?: boolean,
   children?: any,
-}
+};
 
 type State = {
   scrollX: number,
   scrollY: number,
-  setIds: ModalIdentifier[]
-}
+  setIds: ModalIdentifier[],
+};
 
 /**
  * Container for rendered modals.
@@ -92,25 +90,25 @@ type State = {
  *
  */
 export default class ModalContainer extends React.Component<Props, State> {
-  props: Props
+  props: Props;
   state: State = {
     scrollX: 0,
     scrollY: 0,
-    setIds: []
-  }
+    setIds: [],
+  };
 
   static defaultProps = {
     autoRestoreScrollPosition: true,
-    modalClassName: 'react-router-modal__modal',
-    modalInClassName: 'react-router-modal__modal--in',
-    modalOutClassName: 'react-router-modal__modal--out',
-    backdropClassName: 'react-router-modal__backdrop',
-    backdropInClassName: 'react-router-modal__backdrop--in',
-    backdropOutClassName: 'react-router-modal__backdrop--out',
-    containerClassName: 'react-router-modal__container',
-    wrapperClassName: 'react-router-modal__wrapper',
-    bodyModalOpenClassName: 'react-router-modal__modal-open'
-  }
+    modalClassName: "react-router-modal__modal",
+    modalInClassName: "react-router-modal__modal--in",
+    modalOutClassName: "react-router-modal__modal--out",
+    backdropClassName: "react-router-modal__backdrop",
+    backdropInClassName: "react-router-modal__backdrop--in",
+    backdropOutClassName: "react-router-modal__backdrop--out",
+    containerClassName: "react-router-modal__container",
+    wrapperClassName: "react-router-modal__wrapper",
+    bodyModalOpenClassName: "react-router-modal__modal-open",
+  };
 
   componentDidMount() {
     setModalSetIdsHandler(this.onSetIds);
@@ -128,14 +126,19 @@ export default class ModalContainer extends React.Component<Props, State> {
   }
 
   onSetIds = (setIds: number[]) => {
-    const { onFirstModalMounted, onLastModalUnmounted, autoRestoreScrollPosition } = this.props;
-    let nextState: any = {setIds};
+    const {
+      onFirstModalMounted,
+      onLastModalUnmounted,
+      autoRestoreScrollPosition,
+    } = this.props;
+    let nextState: any = { setIds };
     const anyModalsBefore = !!this.state.setIds.length;
     const anyModalsAfter = !!setIds.length;
 
     const showingFirstModal = anyModalsAfter && !anyModalsBefore;
     const hidingLastModal = !anyModalsAfter && anyModalsBefore;
-    const supportsScrollFix = (typeof window !== 'undefined' && typeof window.scroll === 'function');
+    const supportsScrollFix =
+      typeof window !== "undefined" && typeof window.scroll === "function";
     const shouldAutoScroll = autoRestoreScrollPosition && supportsScrollFix;
 
     if (showingFirstModal) {
@@ -144,8 +147,7 @@ export default class ModalContainer extends React.Component<Props, State> {
         nextState.scrollY = window.scrollY;
       }
       this.afterRender = onFirstModalMounted;
-    }
-    else if (hidingLastModal) {
+    } else if (hidingLastModal) {
       this.afterRender = () => {
         if (shouldAutoScroll) {
           window.scroll(this.state.scrollX, this.state.scrollY);
@@ -158,9 +160,9 @@ export default class ModalContainer extends React.Component<Props, State> {
     }
 
     this.setState(nextState);
-  }
+  };
 
-  afterRender: ?Function
+  afterRender: ?Function;
 
   render() {
     const {
@@ -173,46 +175,47 @@ export default class ModalContainer extends React.Component<Props, State> {
       modalInClassName,
       modalOutClassName,
       wrapperClassName,
-      outDelay
+      outDelay,
     } = this.props;
 
     const { setIds } = this.state;
 
-    if (typeof document !== 'undefined') {
+    if (typeof document !== "undefined") {
       if (setIds.length === 0) {
-        document.body && bodyModalOpenClassName && document.body.classList.remove(bodyModalOpenClassName);
-      }
-      else {
-        document.body && bodyModalOpenClassName && document.body.classList.add(bodyModalOpenClassName);
+        document.body &&
+          bodyModalOpenClassName &&
+          document.body.classList.remove(bodyModalOpenClassName);
+      } else {
+        document.body &&
+          bodyModalOpenClassName &&
+          document.body.classList.add(bodyModalOpenClassName);
       }
     }
 
     if (
-      typeof window !== 'undefined' &&
-      typeof window.requestAnimationFrame !== 'undefined'
-      && this.afterRender
+      typeof window !== "undefined" &&
+      typeof window.requestAnimationFrame !== "undefined" &&
+      this.afterRender
     ) {
       window.requestAnimationFrame(this.afterRender);
       this.afterRender = null;
     }
 
-    return (
-      <div>
-        {setIds.map(id => <ModalSetContainer key={id}
-          onRef={(ref) => containerCreated(id, ref)}
-          setId={id}
-          outDelay={outDelay}
-          wrapperClassName={wrapperClassName}
-          backdropClassName={backdropClassName}
-          backdropInClassName={backdropInClassName}
-          backdropOutClassName={backdropOutClassName}
-          containerClassName={containerClassName}
-          modalClassName={modalClassName}
-          modalInClassName={modalInClassName}
-          modalOutClassName={modalOutClassName}
-        />)}
-      </div>
-    );
+    return setIds.map((id) => (
+      <ModalSetContainer
+        key={id}
+        onRef={(ref) => containerCreated(id, ref)}
+        setId={id}
+        outDelay={outDelay}
+        wrapperClassName={wrapperClassName}
+        backdropClassName={backdropClassName}
+        backdropInClassName={backdropInClassName}
+        backdropOutClassName={backdropOutClassName}
+        containerClassName={containerClassName}
+        modalClassName={modalClassName}
+        modalInClassName={modalInClassName}
+        modalOutClassName={modalOutClassName}
+      />
+    ));
   }
 }
-
